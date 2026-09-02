@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agents & Automation — BINARIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00559e;
+      --primary-dark: #004078;
+      --primary-deeper: #0b3051;
+      --secondary: #373735;
+      --accent: #00b4d8;
+      --accent-warm: #f0a500;
+      --light-bg: #eaeaea;
+      --white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-muted: #6b7280;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      padding-bottom: clamp(3rem, 4.5vw, 4.625rem);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.15;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--primary-dark);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      /* font-weight: 800; */
+      color: var(--white);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+
+
+    }
+
+    .nav-logo img {
+      display: block;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-links li a {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1.125rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      background: rgba(0, 216, 205, .12);
+      color: #00d8cd;
+    }
+
+    .nav-cta-btn {
+      background-color: #14548c;
+      color: #fff !important;
+      padding: 0.45rem 1.1rem !important;
+      border-radius: 4px !important;
+    }
+
+    .nav-cta-btn:hover {
+      background: #00d8cd !important;
+      color: #003a4a !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    nav.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--primary-dark);
+      padding: 1rem 2rem 1.5rem;
+      gap: 0.3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 999;
+    }
+
+    nav.mobile-open {
+      position: sticky;
+      top: 0;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+    }
+
+    /* PAGE HERO */
+    #page-hero {
+      background:
+        radial-gradient(circle at 80% 20%, rgba(0, 180, 216, 0.22), transparent 55%),
+        radial-gradient(circle at 15% 85%, rgba(0, 84, 158, 0.25), transparent 55%),
+        linear-gradient(180deg, #061225 0%, #050d1c 55%, #040a16 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 3.5rem 2rem 5.5rem;
+    }
+
+    #page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, rgba(120, 200, 255, 0.05) 0, rgba(120, 200, 255, 0.05) 1px, transparent 1px, transparent 42px),
+        repeating-linear-gradient(90deg, rgba(120, 200, 255, 0.05) 0, rgba(120, 200, 255, 0.05) 1px, transparent 1px, transparent 42px);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 1.6rem;
+    }
+
+    .breadcrumb a {
+      color: rgba(255, 255, 255, 0.75);
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .breadcrumb span.sep {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .breadcrumb span.current {
+      color: var(--accent);
+    }
+
+    .page-hero-icon {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 1.6rem;
+      border: 2px solid var(--accent);
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 180, 216, 0.1);
+      box-shadow: 0 0 40px rgba(0, 180, 216, 0.3);
+    }
+
+    .page-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .page-hero-eyebrow::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+
+    #page-hero h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 1.2rem;
+    }
+
+    #page-hero h2 {
+      font-size: clamp(1rem, 2vw, 1rem);
+      font-weight: 600;
+      color: #00f7ff;
+      margin-bottom: 1.2rem;
+    }
+
+    #page-hero p {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: rgba(255, 255, 255, 0.78);
+      max-width: 680px;
+      margin: 0 auto 2rem;
+    }
+
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: #00d8cd;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 4px;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .hero-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    .hero-btn svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.2;
+    }
+
+    /* SECTION UTILITY */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-eyebrow::before,
+    .section-eyebrow::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--primary);
+      transform: rotate(45deg);
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    .section-eyebrow.on-dark {
+      color: var(--accent);
+    }
+
+    .section-eyebrow.on-dark::before,
+    .section-eyebrow.on-dark::after {
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-title.light {
+      color: #fff;
+    }
+
+    .section-lead {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .section-lead.light {
+      color: rgba(255, 255, 255, 0.72);
+    }
+
+    /* CAPABILITIES (light) */
+    #capabilities {
+      background: #f0f4f9;
+      padding: 5rem 2rem;
+    }
+
+    .capabilities-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+      margin-top: 1rem;
+    }
+
+    .capability-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 2rem 1.7rem;
+      box-shadow: 0 2px 16px rgba(0, 60, 130, 0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .capability-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 32px rgba(0, 60, 130, 0.13);
+    }
+
+    .capability-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 12px;
+      background: #e8f0fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .capability-card h3 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .capability-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* HOW IT WORKS (dark) */
+    #process {
+      background: var(--primary-deeper);
+      padding: 5rem 2rem;
+    }
+
+    .process-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.4rem;
+      margin-top: 1rem;
+      position: relative;
+    }
+
+    .process-step {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 1.8rem 1.4rem;
+      position: relative;
+    }
+
+    .process-step-number {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(0, 180, 216, 0.15);
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .process-step h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .process-step p {
+      font-size: 0.86rem;
+      color: rgba(255, 255, 255, 0.65);
+      line-height: 1.6;
+    }
+
+    /* USE CASES (light) */
+    #use-cases {
+      background: #fff;
+      padding: 5rem 2rem;
+    }
+
+    .use-cases-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .use-cases-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .use-case-card {
+      border: 1px solid #e3ebf3;
+      border-radius: 14px;
+      padding: 1.8rem 1.4rem;
+      background: #fbfdff;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    .use-case-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 60, 130, 0.1);
+      border-color: rgba(0, 180, 216, 0.4);
+    }
+
+    .use-case-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .use-case-card p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* CTA (dark) */
+    #page-cta {
+      background: linear-gradient(160deg, var(--primary-dark), var(--primary-deeper));
+      padding: 4.5rem 2rem;
+      text-align: center;
+    }
+
+    #page-cta h2 {
+      font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.9rem;
+    }
+
+    #page-cta p {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.75);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+    }
+
+    /* STICKY CTA */
+    .sticky-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 900;
+      background-color: var(--primary-dark);
+      height: clamp(3rem, 4.5vw, 4.625rem);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .sticky-cta-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: clamp(8rem, 14vw, 16rem);
+      height: 100%;
+      background: var(--primary);
+      clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 50%, calc(100% - 1.5rem) 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .sticky-cta-inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem 0 clamp(10rem, 16vw, 18rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .sticky-cta-text {
+      font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+      color: #fff;
+      line-height: 1.2;
+      flex-shrink: 1;
+    }
+
+    .sticky-cta-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #00d8cd;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      white-space: nowrap;
+    }
+
+    .sticky-cta-btn:hover {
+      background: #33e5dc;
+      color: #003a4a;
+      transform: translateY(-1px);
+    }
+
+    .sticky-cta-btn .btn-diamond {
+      width: 7px;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.6);
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 61.938rem) {
+      .sticky-cta-bar::before {
+        display: none;
+      }
+
+      .sticky-cta-inner {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.5rem;
+        height: auto;
+      }
+
+      .sticky-cta-bar {
+        height: auto;
+        position: relative;
+      }
+
+      .sticky-cta-text {
+        font-size: 0.88rem;
+        text-align: center;
+      }
+
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--secondary);
+      padding: 4rem 2rem 2rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand-logo {
+      /* font-size: 1.1rem; */
+      /* font-weight: 800;
+      color: #fff; */
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-brand-logo .fb-diamond {
+      width: 40px;
+      height: 48px;
+      background-image: url('pic/Binaris-Logo-22.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-location {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links li a {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+
+    .footer-links li a:hover {
+      color: #fff;
+    }
+
+    .footer-contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.83rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .footer-contact-link:hover {
+      color: #33e5dc;
+    }
+
+    .footer-email {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.4rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .fbd {
+      width: 7px;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(45deg);
+    }
+
+    .fbd:nth-child(2) {
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 1024px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .capabilities-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .use-cases-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .capabilities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .use-cases-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: #fff;
+      max-width: 480px;
+      width: 90%;
+      padding: 2.5rem;
+      position: relative;
+      border-top: 4px solid var(--primary);
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .modal p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #888;
+    }
+
+    .modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .modal-field input,
+    .modal-field textarea {
+      border: 1.5px solid #ddd;
+      padding: 0.65rem 0.9rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-field input:focus,
+    .modal-field textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .modal-field textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .modal-submit {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.8rem;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .modal-submit:hover {
+      background: var(--primary-dark);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===================== BINARIS FOOTER ===================== */
+
+    footer#footer {
+      position: relative;
+      overflow: hidden;
+      /* background: linear-gradient(135deg,
+          #07111f 0%,
+          #081725 58%,
+          #06101d 100%); */
+      padding: 4.5rem 2rem 1.8rem;
+      color: rgba(255, 255, 255, 0.68);
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    footer#footer *,
+    footer#footer *::before,
+    footer#footer *::after {
+      box-sizing: border-box;
+    }
+
+    footer#footer a {
+      text-decoration: none;
+    }
+
+    footer#footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px),
+        linear-gradient(90deg,
+          rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px);
+      background-size: 34px 34px;
+      -webkit-mask-image: linear-gradient(to right, #000, transparent 70%);
+      mask-image: linear-gradient(to right, #000, transparent 70%);
+      pointer-events: none;
+    }
+
+    footer#footer .footer-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    footer#footer .footer-top {
+      display: grid;
+      grid-template-columns:
+        minmax(340px, 1.65fr) minmax(220px, 1fr) minmax(150px, 0.7fr);
+      gap: clamp(2.5rem, 6vw, 6rem);
+      padding-bottom: 3.2rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    /* Brand */
+
+    footer#footer .footer-brand-logo {
+      height: 60px;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    footer#footer .footer-brand-logo img {
+      display: block;
+      object-fit: contain;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-mark {
+      width: 57px;
+      height: 57px;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-wordmark {
+      width: 135px;
+      height: auto;
+      max-height: 38px;
+    }
+
+    footer#footer .footer-brand>p {
+      max-width: 410px;
+      margin: 0 0 1.25rem;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    /* Contact information */
+
+    footer#footer .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    footer#footer .footer-contact-item svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      fill: none;
+      stroke: #00b4d8;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    footer#footer .footer-contact-item a {
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-contact-item a:hover {
+      color: #00d8cd;
+    }
+
+    /* Footer columns */
+
+    footer#footer .footer-col h4 {
+      margin: 0 0 1.25rem;
+      color: #fff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    footer#footer .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    footer#footer .footer-links li a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a::after {
+      content: "›";
+      flex-shrink: 0;
+      color: #00b4d8;
+      font-size: 1.05rem;
+      line-height: 1;
+      opacity: 0.85;
+      transform: translateX(0);
+      transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a:hover {
+      color: #fff;
+      border-bottom-color: rgba(0, 216, 205, 0.25);
+    }
+
+    footer#footer .footer-links li a:hover::after {
+      color: #00d8cd;
+      transform: translateX(4px);
+    }
+
+    /* Bottom bar */
+
+    footer#footer .footer-bottom {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      color: rgba(255, 255, 255, 0.44);
+      font-size: 0.72rem;
+    }
+
+    footer#footer .footer-legal {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    footer#footer .footer-legal a {
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-legal a:hover {
+      color: #00d8cd;
+    }
+
+    footer#footer .footer-legal-sep {
+      width: 1px;
+      height: 13px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Tablet */
+
+    @media (max-width: 900px) {
+      footer#footer .footer-top {
+        grid-template-columns: 1.25fr 1fr;
+        gap: 2.5rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+      footer#footer {
+        padding: 3.5rem 1.25rem 1.5rem;
+      }
+
+      footer#footer .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: auto;
+      }
+
+      footer#footer .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      footer#footer .footer-legal {
+        flex-wrap: wrap;
+      }
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-logo-mark {
+      display: block;
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+    }
+
+    .nav-logo-wordmark {
+      display: block;
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-logo img {
+      image-rendering: auto;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="BINARIS home">
+        <img class="nav-logo-mark" src="pic/Binaris-Logo-22.png" alt="" aria-hidden="true" width="75" height="75"
+          alt="BINARIS">
+        <div class="nav-Logo">
+          <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" class="nav-logo-wordmark"
+              alt="BINARIS — AI & Engineering"></div>
+          <div> - AI & ENGINEERING -</div>
+        </div>
+
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#Services">Services</a></li>
+        <li><a href="index.html#industries">Industries</a></li>
+        <li><a href="index.html#case-studies">Case studies</a></li>
+        <li><a href="index.html#WhyBINARIS">Why BINARIS</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="#" class="nav-cta-btn" onclick="openModal(event)">Contact Us</a></li>
+      </ul>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section id="page-hero">
+    <div class="page-hero-inner reveal">
+      <div class="breadcrumb">
+        <!-- <a href="index.html">Home</a>
+        <span class="sep">/</span>
+        <a href="index.html#Services">Services</a>
+        <span class="sep">/</span> -->
+        <img src="pic/Services/service-2.png" alt="AI Agents & Automation">
+        <!-- <span class="current">AI Agents & Automation</span> -->
+      </div>
+
+      <!-- <div class="page-hero-icon">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" width="38" height="38">
+          <rect x="10" y="14" width="20" height="16" rx="4" stroke="#00d8cd" stroke-width="1.8" />
+          <circle cx="20" cy="10" r="3" stroke="#00d8cd" stroke-width="1.8" />
+          <path d="M20 13v1" stroke="#00d8cd" stroke-width="1.8" stroke-linecap="round" />
+          <circle cx="16" cy="22" r="2" fill="#00d8cd" />
+          <circle cx="24" cy="22" r="2" fill="#00d8cd" />
+          <path d="M16 26h8" stroke="#00d8cd" stroke-width="1.6" stroke-linecap="round" />
+          <path d="M13 14l-3-3M27 14l3-3" stroke="#00d8cd" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </div> -->
+      <div class="page-hero-eyebrow">AI Agents That Actually Get Work Done</div>
+      <h1>AI Agents & Automation</h1>
+      <h2>We build intelligent AI agents that automate real-world business operations.</h2>
+      <p>From workflow automation to enterprise integration, our solutions fit seamlessly
+        into your existing systems and processes.</p>
+      <a href="#" class="hero-btn" onclick="openModal(event)">
+        Talk to Our Team
+        <svg viewBox="0 0 16 16">
+          <polyline points="4 8 12 8" />
+          <polyline points="8 4 12 8 8 12" />
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="sticky-cta-bar">
+    <div class="sticky-cta-inner">
+      <div class="sticky-cta-text">
+        <span class="cta-text">Seeking expert guidance for your project?</span>
+      </div>
+      <button class="sticky-cta-btn" onclick="openModal(event)">
+        <span class="btn-diamond"></span>
+        Talk to our team
+      </button>
+    </div>
+  </div>
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities">
+    <div class="capabilities-inner">
+      <div class="section-header reveal">
+        <!-- <div class="section-eyebrow">What's Included</div> -->
+        <h2 class="section-title">Core Capabilities</h2>
+        <p class="section-lead">Everything needed to plan, build and run reliable AI agents inside real business
+          processes.</p>
+      </div>
+
+      <div class="capabilities-grid reveal" style="transition-delay:0.1s">
+
+        <div class="capability-card">
+          <img src="pic/Services/AI Agents/Intelligent AI Agents.png">
+          <!-- <div class="capability-icon">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="7" y="11" width="18" height="14" rx="3" stroke="#00559e" stroke-width="1.6" />
+              <circle cx="16" cy="8" r="2.4" stroke="#00559e" stroke-width="1.6" />
+              <circle cx="12.5" cy="18" r="1.6" fill="#00b4d8" />
+              <circle cx="19.5" cy="18" r="1.6" fill="#00b4d8" />
+              <path d="M12.5 22h7" stroke="#00b4d8" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </div> -->
+          <h3>Intelligent AI Agents</h3>
+          <p>Autonomous agents that understand context, make decisions and take action across your systems, with
+            human oversight where it matters.</p>
+        </div>
+
+        <div class="capability-card">
+          <img src="pic/Services/AI Agents/Workflow Automation.png">
+          <!-- <div class="capability-icon">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="10" cy="10" r="3" stroke="#00559e" stroke-width="1.6" />
+              <circle cx="22" cy="10" r="3" stroke="#00559e" stroke-width="1.6" />
+              <circle cx="16" cy="22" r="3" stroke="#00559e" stroke-width="1.6" />
+              <path d="M12.5 12l3 6M19.5 12l-3 6M13 10h6" stroke="#00b4d8" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </div> -->
+          <h3>Workflow Automation</h3>
+          <p>End-to-end automation of multi-step tasks — from data entry to approvals — removing manual bottlenecks
+            from daily operations.</p>
+        </div>
+
+        <div class="capability-card">
+          <img src="pic/Services/AI Agents/Process Orchestration.png">
+          <!-- <div class="capability-icon">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="7" width="9" height="9" rx="2" stroke="#00559e" stroke-width="1.6" />
+              <rect x="18" y="7" width="9" height="9" rx="2" stroke="#00559e" stroke-width="1.6" />
+              <rect x="11.5" y="18" width="9" height="9" rx="2" stroke="#00559e" stroke-width="1.6" />
+              <path d="M14 11.5h4M9.5 16v3.5M22.5 16v3.5" stroke="#00b4d8" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </div> -->
+          <h3>Process Orchestration</h3>
+          <p>Coordinate agents, people and existing software into a single, observable pipeline that runs reliably at
+            scale.</p>
+        </div>
+
+        <div class="capability-card">
+          <img src="pic/Services/AI Agents/Document Processing.png">
+          <!-- <div class="capability-icon">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M9 5h10l5 5v17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" stroke="#00559e"
+                stroke-width="1.6" stroke-linejoin="round" />
+              <path d="M19 5v5h5" stroke="#00559e" stroke-width="1.6" stroke-linejoin="round" />
+              <path d="M11.5 17h9M11.5 21h9M11.5 13h4" stroke="#00b4d8" stroke-width="1.4" stroke-linecap="round" />
+            </svg>
+          </div> -->
+          <h3>Document Processing</h3>
+          <p>Extract, classify and validate data from invoices, forms and contracts automatically, feeding it
+            straight into your systems.</p>
+        </div>
+
+        <div class="capability-card">
+          <img src="pic/Services/AI Agents/Business Automation.png">
+          <!-- <div class="capability-icon">
+            <svg viewBox="0 0 32 32" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M16 6a10 10 0 1 0 8.66 5" stroke="#00559e" stroke-width="1.6" stroke-linecap="round" />
+              <path d="M23 5v5h-5" stroke="#00559e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+              <circle cx="16" cy="17" r="2.4" fill="#00b4d8" />
+            </svg>
+          </div> -->
+          <h3>Business Automation</h3>
+          <p>Automate the recurring operational work across sales, support and finance so your teams can focus on
+            higher-value work.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="process">
+    <div class="process-inner">
+      <div class="section-header reveal">
+        <div class="section-eyebrow on-dark">Our Approach</div>
+        <h2 class="section-title light">How We Build It</h2>
+        <p class="section-lead light">A pragmatic, four-step process that gets an agent into production without
+          disrupting how your team already works.</p>
+      </div>
+
+      <div class="process-grid reveal" style="transition-delay:0.1s">
+        <div class="process-step">
+          <div class="process-step-number">1</div>
+          <h3>Discover & Map</h3>
+          <p>We map the current process, identify bottlenecks and decide which steps are safe and valuable to
+            automate first.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-step-number">2</div>
+          <h3>Design the Agent</h3>
+          <p>We design the agent's decision logic, guardrails and escalation paths so it knows when to act and when
+            to hand off to a human.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-step-number">3</div>
+          <h3>Build & Integrate</h3>
+          <p>We build and connect the agent to your existing tools — CRM, ERP, inbox, helpdesk — with no disruptive
+            rip-and-replace.</p>
+        </div>
+        <div class="process-step">
+          <div class="process-step-number">4</div>
+          <h3>Deploy & Optimize</h3>
+          <p>We launch with monitoring in place, then continuously tune accuracy, speed and coverage as real usage
+            comes in.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES -->
+  <section id="use-cases">
+    <div class="use-cases-inner">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Where It Fits</div>
+        <h2 class="section-title">Use Cases</h2>
+        <p class="section-lead">A few of the operational areas where AI agents typically deliver the fastest
+          return.</p>
+      </div>
+
+      <div class="use-cases-grid reveal" style="transition-delay:0.1s">
+        <div class="use-case-card">
+          <h3>Customer Support</h3>
+          <p>Agents that read, triage and draft responses to tickets and emails, escalating only what truly needs a
+            person.</p>
+        </div>
+        <div class="use-case-card">
+          <h3>Finance & Back-Office</h3>
+          <p>Automated invoice matching, reconciliation and reporting that cuts manual data entry and errors.</p>
+        </div>
+        <div class="use-case-card">
+          <h3>Healthcare Admin</h3>
+          <p>Streamlined scheduling, intake forms and records handling that reduces administrative overhead.</p>
+        </div>
+        <div class="use-case-card">
+          <h3>Manufacturing Ops</h3>
+          <p>Agents that monitor production data and trigger the right workflow the moment a condition is met.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="page-cta">
+    <h2>Ready to put an AI agent to work?</h2>
+    <p>Tell us about the process you want to automate and we'll map out where an AI agent can help most.</p>
+    <a href="#" class="hero-btn" onclick="openModal(event)">
+      Automate Your Workflow
+      <svg viewBox="0 0 16 16">
+        <polyline points="4 8 12 8" />
+        <polyline points="8 4 12 8 8 12" />
+      </svg>
+    </a>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-inner">
+
+      <div class="footer-top">
+
+        <!-- Brand and contact information -->
+        <div class="footer-brand">
+
+          <a href="index.html" class="footer-brand-logo" aria-label="BINARIS home">
+            <img class="footer-logo-mark" src="pic/Binaris-Logo-22.png" alt="" aria-hidden="true">
+            <div class="nav-Logo">
+              <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" alt="BINARIS AI & Engineering"></div>
+              <div> - AI & ENGINEERING -</div>
+            </div>
+
+          </a>
+
+          <p>
+            AI, computer vision and engineering software for complex
+            scientific, industrial and business challenges.
+          </p>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="1" y="3" width="14" height="10" rx="1"></rect>
+              <polyline points="1 4 8 9 15 4"></polyline>
+            </svg>
+
+            <a href="mailto:info@binaris.com.au">
+              info@binaris.com.au
+            </a>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"></path>
+              <circle cx="8" cy="6" r="1.5"></circle>
+            </svg>
+
+            <span>Melbourne, Australia</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5"></circle>
+              <path d="M1.5 8h13"></path>
+              <path d="M8 1.5c2 2 3 4.1 3 6.5s-1 4.5-3 6.5"></path>
+              <path d="M8 1.5C6 3.5 5 5.6 5 8s1 4.5 3 6.5"></path>
+            </svg>
+
+            <span>Working with clients across Australia and beyond.</span>
+          </div>
+
+        </div>
+
+        <!-- Capabilities -->
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+
+          <ul class="footer-links">
+            <li>
+              <a href="ai-machine-learning.html">
+                AI &amp; Machine Learning
+              </a>
+            </li>
+
+            <li>
+              <a href="ai-agents-automation.html">
+                AI Agents &amp; Automation
+              </a>
+            </li>
+
+            <li>
+              <a href="computer-vision.html">
+                Computer Vision &amp; Imaging
+              </a>
+            </li>
+
+            <li>
+              <a href="engineering-software.html">
+                Scientific &amp; Engineering Software
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="footer-col">
+          <h4>Company</h4>
+
+          <ul class="footer-links">
+            <li>
+              <a href="About.html">About Us</a>
+            </li>
+
+            <li>
+              <a href="#" onclick="openModal(event)">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer bottom -->
+      <div class="footer-bottom">
+        <span>© 2026 BINARIS. All rights reserved.</span>
+
+        <div class="footer-legal">
+          <!-- <a href="privacy-policy.html">Privacy Policy</a> -->
+
+          <!-- <span class="footer-legal-sep" aria-hidden="true"></span>-->
+
+          <!-- <a href="terms-of-use.html">Terms of Use</a> -->
+        </div>
+      </div>
+
+    </div>
+  </footer>
+  <div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      <h3>Let's Talk About Your Project</h3>
+      <p>Tell us what you're working on and our team will get back to you within one business day.</p>
+      <div class="modal-field"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
+      <div class="modal-field"><label>Email Address</label><input type="email" placeholder="jane@company.com"></div>
+      <div class="modal-field"><label>How Can We Help?</label><textarea
+          placeholder="Describe your project or question…"></textarea></div>
+      <button class="modal-submit" onclick="closeModal()">Send Message →</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleNav() { document.getElementById('mainNav').classList.toggle('mobile-open'); }
+    function openModal(e) { if (e) e.preventDefault(); document.getElementById('contactModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { document.getElementById('contactModal').classList.remove('open'); document.body.style.overflow = ''; }
+    function closeModalOnOverlay(e) { if (e.target === document.getElementById('contactModal')) closeModal(); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+  <script src="contact-form.js"></script>
+</body>
+
+</html>
+
+

@@ -1,0 +1,2508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us — BINARIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00559e;
+      --primary-dark: #004078;
+      --primary-deeper: #0b3051;
+      --secondary: #373735;
+      --accent: #00b4d8;
+      --accent-warm: #f0a500;
+      --light-bg: #eaeaea;
+      --white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-muted: #6b7280;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.15;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--primary-dark);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      /* font-weight: 800; */
+      color: var(--white);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+
+
+    }
+
+    .nav-logo img {
+      display: block;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-links li a {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1.125rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(0, 216, 205, .12);
+      color: #00d8cd;
+    }
+
+    .nav-cta-btn {
+      background-color: #14548c;
+      color: #fff !important;
+      padding: 0.45rem 1.1rem !important;
+      border-radius: 4px !important;
+    }
+
+    .nav-cta-btn:hover {
+      background: #00d8cd !important;
+      color: #003a4a !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb-bar {
+      background: var(--primary-deeper);
+      padding: 1rem 2rem;
+    }
+
+    .breadcrumb-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .breadcrumb-inner a {
+      color: var(--accent);
+      transition: color 0.2s;
+    }
+
+    .breadcrumb-inner a:hover {
+      color: #fff;
+    }
+
+    .breadcrumb-sep {
+      opacity: 0.5;
+    }
+
+    .breadcrumb-current {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      background:
+        radial-gradient(circle at 78% 42%, rgba(0, 180, 216, 0.22), transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(0, 84, 158, 0.25), transparent 55%),
+        linear-gradient(180deg, #00163e 0%, #032a73 55%, #062f79 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 2rem 1rem 3rem;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.06) 0, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.06) 0, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 32px);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      color: #fff;
+    }
+
+    .page-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .page-hero-eyebrow::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+
+    .page-hero p {
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 680px;
+    }
+
+    /* SECTION UTILITY */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-eyebrow::before,
+    .section-eyebrow::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--primary);
+      transform: rotate(45deg);
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-lead {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    .applications-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* =====================
+       MISSION, VISION & VALUES
+    ===================== */
+    #about-overview {
+      padding: 32px 20px 38px;
+      background: #fff;
+    }
+
+    .overview-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .overview-intro {
+      padding: 4px 20px 0 0;
+    }
+
+    .overview-intro .section-eyebrow {
+      margin-bottom: 10px;
+    }
+
+    .overview-intro .section-title {
+      text-align: left;
+      font-size: clamp(1.7rem, 2.5vw, 1.2rem);
+      line-height: 1.08;
+      margin-bottom: 18px;
+    }
+
+    .overview-intro p {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.85;
+      margin-top: 0;
+    }
+
+    .overview-column1 h3,
+    .overview-column2 h3,
+    .overview-column3 h3 {
+      font-size: 0.95rem;
+      text-align: center;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .overview-column1 h3 {
+      color: #7c3fca;
+    }
+
+    .overview-column2 h3 {
+      color: #066c63;
+    }
+
+    .overview-column3 h3 {
+      color: var(--primary);
+    }
+
+    .overview-column1,
+    .overview-column2,
+    .overview-column3 {
+      min-width: 0;
+    }
+
+    .mini-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 10px;
+      margin: 0;
+      padding: 25px 18px 23px;
+      border: 1px solid #e8edf4;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 5px 18px rgba(0, 60, 130, 0.055);
+      min-height: 250px;
+      width: 100%;
+      transition: .25s;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-3px);
+      border-color: #d5e4f2;
+      box-shadow: 0 10px 24px rgba(0, 85, 158, .10);
+    }
+
+    .mini-card .icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #f2f6fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .mini-card .icon img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .mini-card h41,
+    .mini-card h42,
+    .mini-card h43 {
+      display: block;
+      font-size: 0.88rem;
+      line-height: 1.3;
+      margin-bottom: 5px;
+      font-weight: 700;
+    }
+
+    .mini-card h41 {
+      color: #7c3fca;
+    }
+
+    .mini-card h42 {
+      color: #066c63;
+    }
+
+    .mini-card h43 {
+      color: #00559e;
+    }
+
+    .mini-card p {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .principles-wrapper {
+      grid-column: 1 / -1;
+      margin-top: 8px;
+      padding: 22px 20px 18px;
+      background: linear-gradient(180deg, #f7f9fc 0%, #f3f6fa 100%);
+      border-radius: 14px;
+      border: 1px solid #eef2f7;
+    }
+
+    .principles-title {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .principles-title::before,
+    .principles-title::after {
+      content: '◆';
+      color: var(--primary);
+      font-size: 0.45rem;
+      margin: 0 8px;
+      vertical-align: middle;
+    }
+
+    .principles-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .principle-card {
+      text-align: center;
+      padding: 5px 8px 2px;
+      min-width: 0;
+    }
+
+    .principle-icon {
+      width: 50px;
+      height: 50px;
+      margin: 0 auto 9px;
+      border-radius: 50%;
+      background: #eaf2fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .principle-icon img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .principle-card h4 {
+      font-size: 0.68rem;
+      line-height: 1.25;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .principle-card .principle-divider {
+      width: 28px;
+      height: 2px;
+      background: var(--primary);
+      margin: 0 auto 7px;
+      border-radius: 2px;
+      opacity: .85;
+    }
+
+    .principle-card p {
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    @media(max-width:1000px) {
+      .overview-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .overview-intro {
+        grid-column: 1 / -1;
+        padding-right: 0;
+        margin-bottom: 10px;
+      }
+
+      .overview-intro .section-title {
+        text-align: center;
+      }
+
+      .overview-intro p {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .principles-grid {
+        grid-template-columns: repeat(3, 1fr);
+        row-gap: 22px;
+      }
+    }
+
+    @media(max-width:768px) {
+      #about-overview {
+        padding: 55px 18px 60px;
+      }
+
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .overview-intro,
+      .principles-wrapper {
+        grid-column: auto;
+      }
+
+      .overview-intro .section-title {
+        font-size: 1.8rem;
+      }
+
+      .overview-column1,
+      .overview-column2,
+      .overview-column3 {
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+
+      .mini-card {
+        min-height: 175px;
+      }
+
+      .principles-wrapper {
+        margin-top: 5px;
+      }
+
+      .principles-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media(max-width:480px) {
+      .principles-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* =====================
+       CORE CAPABILITIES
+    ===================== */
+    #capabilities {
+      background: #f7f8fa;
+      padding: 52px 20px 58px;
+    }
+
+    #capabilities .applications-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    #capabilities .section-header {
+      margin-bottom: 28px;
+    }
+
+    #capabilities .section-eyebrow {
+      margin-bottom: 6px;
+    }
+
+    #capabilities .section-title {
+      margin-bottom: 8px;
+      font-size: clamp(1.8rem, 3vw, 2.25rem);
+    }
+
+    #capabilities .section-lead {
+      max-width: 620px;
+      font-size: 0.82rem;
+      line-height: 1.55;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 0;
+    }
+
+    .app-card {
+      background: #fff;
+      border-radius: 11px;
+      padding: 18px 14px 20px;
+      border: 1px solid #e1e6ee;
+      min-height: 194px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 60, 130, 0.1);
+      border-color: var(--accent);
+    }
+
+    .app-card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #edf4fb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .app-card-icon img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+    }
+
+    .app-card h3 {
+      font-size: 0.78rem;
+      line-height: 1.3;
+      font-weight: 700;
+      margin-bottom: 9px;
+      color: var(--text-dark);
+    }
+
+    .app-card h3::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+      margin: 7px auto 0;
+    }
+
+    .app-card p {
+      font-size: 0.67rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    .deployment-label {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      margin: 26px 0 12px;
+      color: #7c3fca;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+
+    .deployment-label::before,
+    .deployment-label::after {
+      content: '';
+      height: 1px;
+      background: #d8dce4;
+      flex: 1;
+    }
+
+    .deployment-grid {
+      display: grid;
+      grid-template-columns: 1fr 48px 1fr;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .deployment-card {
+      background: #fff;
+      border: 1px solid #dfe5ee;
+      border-radius: 10px;
+      min-height: 108px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    .deployment-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 22px rgba(0, 60, 130, 0.09);
+      border-color: #cddceb;
+    }
+
+    .deployment-card .app-card-icon {
+      margin: 0;
+      width: 50px;
+      height: 50px;
+      flex: 0 0 50px;
+    }
+
+    .deployment-card .app-card-icon img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .deployment-card-content {
+      min-width: 0;
+    }
+
+    .deployment-card h3 {
+      font-size: 0.78rem;
+      line-height: 1.3;
+      margin-bottom: 7px;
+      color: var(--text-dark);
+    }
+
+    .deployment-card h3::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 2px;
+      background: var(--primary);
+      margin-top: 6px;
+      border-radius: 2px;
+    }
+
+    .deployment-card p {
+      font-size: 0.67rem;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+
+    .deployment-arrow {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7c3fca;
+      font-size: 1.45rem;
+      background: #fff;
+      border: 1px solid #e2d8f2;
+      box-shadow: 0 4px 12px rgba(124, 63, 202, 0.08);
+      justify-self: center;
+    }
+
+
+    @media (max-width: 900px) {
+      .approach-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .approach-grid::before {
+        display: none;
+      }
+
+      .approach-card::before {
+        top: -1.25rem;
+      }
+
+      .approach-card:nth-child(1)::after,
+      .approach-card:nth-child(2)::after,
+      .approach-card:nth-child(3)::after {
+        display: none;
+      }
+
+      .approach-grid {
+        margin-top: 3rem;
+      }
+
+      .approach-bottom {
+        grid-template-columns: 1fr;
+      }
+
+      .approach-divider {
+        width: 100%;
+        height: 1px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .app-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .deployment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .deployment-arrow {
+        transform: rotate(90deg);
+      }
+    }
+
+    /* =====================
+       OUR APPROACH SECTION
+    ===================== */
+    #approach {
+      background: linear-gradient(180deg, #031a34 0%, #06294a 100%);
+      padding: 2.8rem 0 1.6rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    #approach .section-eyebrow {
+      color: #20c7f4;
+    }
+
+    #approach .section-eyebrow::before,
+    #approach .section-eyebrow::after {
+      background: #20c7f4;
+    }
+
+    #approach .section-title {
+      color: #fff;
+    }
+
+    #approach .section-lead {
+      color: rgba(255, 255, 255, .72);
+      max-width: 620px;
+    }
+
+    .approach-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 2rem;
+
+    }
+
+    .approach-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      margin-top: 4.2rem;
+
+
+    }
+
+    .approach-grid::before {
+      content: '';
+      position: absolute;
+      left: 4.5%;
+      right: 4.5%;
+      top: -1.15rem;
+      height: 1px;
+      /* background: rgba(24, 196, 244, .55); */
+
+    }
+
+    .approach-card {
+      position: relative;
+      min-height: 265px;
+      background: #01608bcb;
+      border: 1px solid rgba(93, 188, 239, .24);
+      border-radius: 8px;
+      padding: 4.6rem 1.45rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      transition: transform .25s, border-color .25s, background .25s;
+    }
+
+    .approach-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(24, 196, 244, .75);
+      background: rgba(255, 255, 255, .075);
+    }
+
+    .approach-card::before {
+      content: '';
+      position: absolute;
+      top: -1.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 38px;
+      height: 38px;
+      border: 1px solid #18c4f4;
+      border-radius: 50%;
+      background: #06294a;
+      box-shadow: 0 0 0 4px rgba(3, 26, 52, .8);
+      z-index: 2;
+    }
+
+    .approach-card:nth-child(1)::after,
+    .approach-card:nth-child(2)::after,
+    .approach-card:nth-child(3)::after {
+      content: '→';
+      position: absolute;
+      top: -1.55rem;
+      right: -0.75rem;
+      color: #18c4f4;
+      font-size: 2rem;
+      line-height: 1;
+      z-index: 3;
+    }
+
+    .approach-card:nth-child(1)::before {
+      content: '01';
+    }
+
+    .approach-card:nth-child(2)::before {
+      content: '02';
+    }
+
+    .approach-card:nth-child(3)::before {
+      content: '03';
+    }
+
+    .approach-card:nth-child(4)::before {
+      content: '04';
+    }
+
+    .approach-card::before {
+      color: #18c4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+
+    .approach-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(17, 126, 193, .12);
+      border: 1px solid rgba(36, 191, 241, .2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+      color: #37c9f5;
+    }
+
+    .approach-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .approach-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      margin-bottom: .35rem;
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #18c4f4;
+    }
+
+    .approach-tag span {
+      width: 5px;
+      height: 5px;
+      background: #18c4f4;
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+
+    .approach-card h3 {
+      color: #fff;
+      font-size: 1.12rem;
+      line-height: 1.2;
+      margin-bottom: .85rem;
+    }
+
+    .approach-card h3::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: #18c4f4;
+      margin-top: .75rem;
+    }
+
+    .approach-card p {
+      font-size: .78rem;
+      color: rgba(255, 255, 255, .68);
+      line-height: 1.65;
+      margin-top: .15rem;
+    }
+
+    .approach-bottom {
+      margin-top: 1.25rem;
+      border: 1px solid rgba(93, 188, 239, .24);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .035);
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 1fr 1px 210px;
+      align-items: center;
+      padding: .75rem 1.1rem;
+      gap: 1rem;
+    }
+
+    .approach-outcome,
+    .approach-collab {
+      display: flex;
+      align-items: center;
+      gap: .9rem;
+    }
+
+    .approach-bottom-icon {
+      width: 48px;
+      height: 48px;
+      border: 1px solid #18c4f4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #18c4f4;
+      flex-shrink: 0;
+    }
+
+    .approach-bottom-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .approach-bottom p {
+      color: rgba(255, 255, 255, .7);
+      font-size: .73rem;
+      line-height: 1.55;
+    }
+
+    .approach-bottom strong {
+      color: #fff;
+    }
+
+    .approach-divider {
+      width: 1px;
+      height: 42px;
+      background: rgba(93, 188, 239, .2);
+    }
+
+    .approach-collab p {
+      font-size: .72rem;
+      line-height: 1.5;
+    }
+
+    /* =====================
+       WHY BINARIS
+    ===================== */
+    #why-us {
+      background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+      padding: 4.75rem 2rem 4rem;
+    }
+
+    .why-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin-top: 2.6rem;
+    }
+
+    .why-card {
+      position: relative;
+      background: transparent;
+      border-radius: 0;
+      padding: 1.2rem 2rem 1.7rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      box-shadow: none;
+      transition: transform 0.25s;
+    }
+
+    .why-card:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      top: 1.2rem;
+      right: 0;
+      bottom: 1.2rem;
+      width: 1px;
+      background: #dbe4ee;
+    }
+
+    .why-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .why-card-number {
+      position: absolute;
+      top: -0.6rem;
+      left: 1.4rem;
+      color: #d8e2ec;
+      font-size: 2.15rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.05em;
+    }
+
+    .why-card-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      color: #1769a6;
+      background: #e6f1fb;
+      border: 1px solid #cfe3f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: .6rem 0 1.45rem;
+      flex-shrink: 0;
+    }
+
+    .why-card:nth-child(2) .why-card-icon {
+      color: #34834b;
+      background: #ebf6e9;
+      border-color: #d4ebd0;
+    }
+
+    .why-card:nth-child(3) .why-card-icon {
+      color: #5b49a6;
+      background: #f0edfb;
+      border-color: #ddd7f4;
+    }
+
+    .why-card:nth-child(4) .why-card-icon {
+      color: #16857d;
+      background: #e8f7f4;
+      border-color: #cfebe7;
+    }
+
+    .why-card-icon svg {
+      width: 36px;
+      height: 36px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .why-card-divider {
+      width: 28px;
+      height: 2px;
+      background: currentColor;
+      border-radius: 99px;
+      margin: 0.8rem auto 1rem;
+      color: #1769a6;
+    }
+
+    .why-card:nth-child(2) .why-card-divider {
+      color: #34834b;
+    }
+
+    .why-card:nth-child(3) .why-card-divider {
+      color: #5b49a6;
+    }
+
+    .why-card:nth-child(4) .why-card-divider {
+      color: #16857d;
+    }
+
+    .why-card h3 {
+      font-size: 0.94rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    .why-card p {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-top: 0.1rem;
+    }
+
+    .why-outcome {
+      margin-top: 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 2rem;
+      padding: 1.15rem 1.45rem;
+      background: rgba(255, 255, 255, .72);
+      border: 1px solid #cbdbea;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(8, 48, 81, .035);
+    }
+
+    .why-outcome-main {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-width: 0;
+    }
+
+    .why-outcome-icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      flex: 0 0 54px;
+      color: #1769a6;
+      background: #e5f1fb;
+    }
+
+    .why-outcome-icon svg,
+    .why-outcome-values svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .why-outcome-copy {
+      color: #64748b;
+      font-size: .76rem;
+      line-height: 1.6;
+    }
+
+    .why-outcome-copy strong {
+      color: #182b3c;
+      font-size: .82rem;
+    }
+
+    .why-outcome-values {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: center;
+      gap: .35rem .7rem;
+      padding-left: 1.5rem;
+      border-left: 1px solid #dbe4ee;
+      color: #1769a6;
+    }
+
+    .why-outcome-values svg {
+      grid-row: 1/4;
+      width: 34px;
+      height: 34px;
+      margin-right: .25rem;
+    }
+
+    .why-outcome-values span {
+      color: #3f5870;
+      font-size: .72rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: .4rem;
+    }
+
+    .why-outcome-values span::before {
+      content: '✓';
+      width: 14px;
+      height: 14px;
+      border: 1px solid #418fc4;
+      color: #1769a6;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: .55rem;
+      line-height: 1;
+    }
+
+    /* CTA */
+    #page-cta {
+      background: var(--primary);
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    #page-cta h2 {
+      color: #fff;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    #page-cta p {
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .page-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: #00d8cd;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .page-cta-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    /* BACK LINK */
+    .back-link-wrap {
+      background: var(--light-bg);
+      padding: 1.5rem 2rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .back-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--primary);
+      fill: none;
+      stroke-width: 2.2;
+    }
+
+    .back-link:hover {
+      color: var(--primary-dark);
+    }
+
+
+    /* FOOTER */
+    footer {
+      background: var(--secondary);
+      padding: 4rem 2rem 2rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand-logo {
+      /* font-size: 1.1rem; */
+      /* font-weight: 800;
+      color: #fff; */
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-brand-logo .fb-diamond {
+      width: 40px;
+      height: 48px;
+      background-image: url('pic/Binaris-Logo-22.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-location {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links li a {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+
+    .footer-links li a:hover {
+      color: #fff;
+    }
+
+    .footer-contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.83rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .footer-contact-link:hover {
+      color: #33e5dc;
+    }
+
+    .footer-email {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.4rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+
+    .fbd {
+      width: 7px;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(45deg);
+    }
+
+    .fbd:nth-child(2) {
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .why-card:nth-child(2)::after {
+        display: none;
+      }
+
+      .why-outcome {
+        grid-template-columns: 1fr;
+      }
+
+      .why-outcome-values {
+        border-left: 0;
+        border-top: 1px solid #dbe4ee;
+        padding: 1rem 0 0;
+        grid-template-columns: auto repeat(3, auto);
+        justify-content: start;
+      }
+
+      .why-outcome-values svg {
+        grid-row: auto;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .app-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #why-us {
+        padding: 3.5rem 1rem;
+      }
+
+      .why-card {
+        padding: 1.2rem 1.25rem 2rem;
+      }
+
+      .why-card::after {
+        display: none;
+      }
+
+      .why-card-number {
+        left: .4rem;
+      }
+
+      .why-outcome {
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      .why-outcome-main {
+        align-items: flex-start;
+      }
+
+      .why-outcome-values {
+        grid-template-columns: auto 1fr;
+      }
+
+      .why-outcome-values svg {
+        grid-row: 1/4;
+      }
+    }
+
+
+    @media (max-width: 560px) {
+      #capabilities {
+        padding: 44px 14px 48px;
+      }
+
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .app-card {
+        min-height: 0;
+      }
+
+      .deployment-label {
+        gap: 10px;
+        font-size: 0.66rem;
+      }
+
+      .deployment-card {
+        align-items: flex-start;
+      }
+    }
+
+    nav.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--primary-dark);
+      padding: 1rem 2rem 1.5rem;
+      gap: 0.3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 999;
+    }
+
+    nav.mobile-open {
+      position: sticky;
+      top: 0;
+    }
+
+    @media (max-width: 600px) {
+      #approach {
+        padding: 4rem 0 2rem;
+      }
+
+      .approach-inner {
+        padding: 0 1rem;
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .approach-card {
+        min-height: auto;
+        padding: 4.2rem 1.25rem 1.35rem;
+      }
+
+      .approach-bottom {
+        padding: .85rem;
+      }
+    }
+
+
+    /* ===================== BINARIS FOOTER ===================== */
+
+    footer#footer {
+      position: relative;
+      overflow: hidden;
+      /* background: linear-gradient(135deg,
+          #07111f 0%,
+          #081725 58%,
+          #06101d 100%); */
+      padding: 4.5rem 2rem 1.8rem;
+      color: rgba(255, 255, 255, 0.68);
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    footer#footer *,
+    footer#footer *::before,
+    footer#footer *::after {
+      box-sizing: border-box;
+    }
+
+    footer#footer a {
+      text-decoration: none;
+    }
+
+    footer#footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px),
+        linear-gradient(90deg,
+          rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px);
+      background-size: 34px 34px;
+      -webkit-mask-image: linear-gradient(to right, #000, transparent 70%);
+      mask-image: linear-gradient(to right, #000, transparent 70%);
+      pointer-events: none;
+    }
+
+    footer#footer .footer-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    footer#footer .footer-top {
+      display: grid;
+      grid-template-columns:
+        minmax(340px, 1.65fr) minmax(220px, 1fr) minmax(150px, 0.7fr);
+      gap: clamp(2.5rem, 6vw, 6rem);
+      padding-bottom: 3.2rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    /* Brand */
+
+    footer#footer .footer-brand-logo {
+      height: 60px;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    footer#footer .footer-brand-logo img {
+      display: block;
+      object-fit: contain;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-mark {
+      width: 57px;
+      height: 57px;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-wordmark {
+      width: 135px;
+      height: auto;
+      max-height: 38px;
+    }
+
+    footer#footer .footer-brand>p {
+      max-width: 410px;
+      margin: 0 0 1.25rem;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    /* Contact information */
+
+    footer#footer .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    footer#footer .footer-contact-item svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      fill: none;
+      stroke: #00b4d8;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    footer#footer .footer-contact-item a {
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-contact-item a:hover {
+      color: #00d8cd;
+    }
+
+    /* Footer columns */
+
+    footer#footer .footer-col h4 {
+      margin: 0 0 1.25rem;
+      color: #fff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    footer#footer .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    footer#footer .footer-links li a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a::after {
+      content: "›";
+      flex-shrink: 0;
+      color: #00b4d8;
+      font-size: 1.05rem;
+      line-height: 1;
+      opacity: 0.85;
+      transform: translateX(0);
+      transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a:hover {
+      color: #fff;
+      border-bottom-color: rgba(0, 216, 205, 0.25);
+    }
+
+    footer#footer .footer-links li a:hover::after {
+      color: #00d8cd;
+      transform: translateX(4px);
+    }
+
+    /* Bottom bar */
+
+    footer#footer .footer-bottom {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      color: rgba(255, 255, 255, 0.44);
+      font-size: 0.72rem;
+    }
+
+    footer#footer .footer-legal {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    footer#footer .footer-legal a {
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-legal a:hover {
+      color: #00d8cd;
+    }
+
+    footer#footer .footer-legal-sep {
+      width: 1px;
+      height: 13px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Tablet */
+
+    @media (max-width: 900px) {
+      footer#footer .footer-top {
+        grid-template-columns: 1.25fr 1fr;
+        gap: 2.5rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+      footer#footer {
+        padding: 3.5rem 1.25rem 1.5rem;
+      }
+
+      footer#footer .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: auto;
+      }
+
+      footer#footer .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      footer#footer .footer-legal {
+        flex-wrap: wrap;
+      }
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-logo-mark {
+      display: block;
+      width: 54px;
+      height: 54px;
+      object-fit: contain;
+    }
+
+    .nav-logo-wordmark {
+      display: block;
+      width: 150px;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .nav-logo img {
+      image-rendering: auto;
+    }
+  </style>
+
+</head>
+
+<body>
+
+
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="BINARIS home">
+        <img class="nav-logo-mark" src="pic/Binaris-Logo-22.png" alt="" aria-hidden="true" width="75" height="75"
+          alt="BINARIS">
+        <div class="nav-Logo">
+          <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" class="nav-logo-wordmark"
+              alt="BINARIS — AI & Engineering"></div>
+          <div> - AI & ENGINEERING -</div>
+        </div>
+
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#Services">Services</a></li>
+        <li><a href="index.html#industries">Industries</a></li>
+        <li><a href="index.html#case-studies">Case studies</a></li>
+        <li><a href="index.html#WhyBINARIS">Why BINARIS</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="#" class="nav-cta-btn" onclick="openModal(event)">Contact Us</a></li>
+      </ul>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">About Us</span>
+    </div>
+  </div> -->
+
+  <!-- HERO -->
+  <section class="page-hero">
+    <div class="page-hero-inner reveal">
+      <img src="pic/Binaris-Logo-22.png" width="110px" height="110px" style="margin-bottom:1.4rem;">
+      <div class="page-hero-eyebrow">Who We Are</div>
+      <h1>AI, Computer Vision &amp; Engineering Software</h1>
+      <p>BINARIS is an applied AI and engineering software company based in Melbourne, Australia. We work with
+        scientific, industrial, healthcare and enterprise organisations to build intelligent software that solves
+        complex, real-world challenges — combining deep technical expertise with a practical engineering mindset.</p>
+    </div>
+  </section>
+
+  <!-- ======================== -->
+  <!-- MISSION, VISION & VALUES -->
+  <!-- ======================== -->
+  <section id="about-overview">
+    <div class="applications-inner">
+      <div class="overview-grid">
+
+        <!-- Intro -->
+        <div class="overview-intro reveal">
+          <div class="section-eyebrow">Our Foundation</div>
+          <h2 class="section-title">Mission, Vision &amp; Values</h2>
+          <p>
+            We believe that transformative AI should be rigorous, explainable and purpose-built for the domain it
+            serves.
+            BINARIS was founded on the principle that deep technical expertise, combined with close collaboration with
+            domain experts,
+            produces AI systems that genuinely work in the real world — not just in the lab.
+          </p>
+        </div>
+
+        <!-- Mission -->
+        <div class="overview-column1 reveal">
+          <h3>Our Mission</h3>
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/About Us/Applied AI for Impact.png" alt="Our Mission">
+            </div>
+            <div>
+              <h41>Our Mission</h41>
+              <p>Build practical AI, computer vision and engineering software that creates measurable impact for our
+                clients.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="overview-column2 reveal">
+          <h3>Our Vision</h3>
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/About Us/Global Reach.png" alt="Our Vision">
+            </div>
+            <div>
+              <h42>Our Vision</h42>
+              <p>Deliver AI solutions that help organisations across industries and geographies compete on intelligence
+                and create a better future.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Values -->
+        <div class="overview-column3 reveal">
+          <h3>Our Values</h3>
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/About Us/Technical Rigour.png" alt="Our Values">
+            </div>
+            <div>
+              <h43>Our Values</h43>
+              <p>Guiding principles that shape the way we think, build, collaborate and deliver every day.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Principles -->
+        <div class="principles-wrapper reveal">
+          <div class="principles-title">Our Principles</div>
+          <div class="principles-grid">
+
+            <div class="principle-card">
+              <div class="principle-icon">
+                <img src="pic/About Us/Technical Rigour.png" alt="Technical Rigour">
+              </div>
+              <h4>Technical Rigour</h4>
+              <div class="principle-divider"></div>
+              <p>We hold ourselves to the highest standards of engineering quality and reliability.</p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-icon">
+                <img src="pic/About Us/Domain-First Thinking.png" alt="Domain-First Thinking">
+              </div>
+              <h4>Domain-First Thinking</h4>
+              <div class="principle-divider"></div>
+              <p>We start with the real problem and design solutions around deep domain understanding.</p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-icon">
+                <img src="pic/About Us/Innovation with Purpose.png" alt="Innovation with Purpose">
+              </div>
+              <h4>Innovation with Purpose</h4>
+              <div class="principle-divider"></div>
+              <p>We solve meaningful problems with practical AI that delivers real business value.</p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-icon">
+                <img src="pic/About Us/Trusted Partnership.png" alt="Trusted Partnership">
+              </div>
+              <h4>Trusted Partnership</h4>
+              <div class="principle-divider"></div>
+              <p>We act as a long-term partner, invested in our clients' outcomes and shared success.</p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-icon">
+                <img src="pic/About Us/Responsible AI.png" alt="Responsible AI">
+              </div>
+              <h4>Responsible AI</h4>
+              <div class="principle-divider"></div>
+              <p>We build systems that are explainable, auditable and aligned with ethical and regulatory standards.</p>
+            </div>
+
+            <div class="principle-card">
+              <div class="principle-icon">
+                <img src="pic/About Us/Continuous Learning.png" alt="Continuous Learning">
+              </div>
+              <h4>Continuous Learning</h4>
+              <div class="principle-divider"></div>
+              <p>We learn continuously, adapt quickly and stay at the forefront of AI, engineering and science.</p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <!-- ======================== -->
+
+  <!-- CAPABILITIES -->
+  <section id="capabilities">
+    <div class="applications-inner">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">What We Do</div>
+        <h2 class="section-title">Core Capabilities</h2>
+        <p class="section-lead">Four interconnected areas of deep technical expertise — applied to your domain's most
+          complex challenges.</p>
+      </div>
+      <div class="app-grid reveal" style="transition-delay:0.1s">
+        <div class="app-card">
+          <div class="app-card-icon">
+            <img src="pic/About Us/AI & Machine Learning.png" alt="AI & Machine Learning" />
+          </div>
+          <h3>AI &amp; Machine Learning</h3>
+          <p>Predictive analytics, deep learning, generative AI and custom ML models designed for real-world deployment
+            across scientific, industrial and enterprise environments.</p>
+        </div>
+
+        <div class="app-card">
+          <div class="app-card-icon">
+            <img src="pic/About Us/AI Agents & Automation.png" alt="AI Agents & Automation" />
+          </div>
+          <h3>AI Agents &amp; Automation</h3>
+          <p>Intelligent agents and workflow automation that reduce manual effort, orchestrate complex processes and
+            integrate with existing enterprise systems.</p>
+        </div>
+
+        <div class="app-card">
+          <div class="app-card-icon">
+            <img src="pic/About Us/Computer Vision & Imaging.png" alt="Computer Vision & Imaging" />
+          </div>
+          <h3>Computer Vision &amp; Imaging</h3>
+          <p>Medical imaging AI, industrial inspection systems, object detection and scientific imaging platforms built
+            to operate accurately in demanding environments.</p>
+        </div>
+
+        <div class="app-card">
+          <div class="app-card-icon">
+            <img src="pic/About Us/Scientific & Engineering Software.png" alt="Scientific & Engineering Software" />
+          </div>
+          <h3>Scientific &amp; Engineering Software</h3>
+          <p>Desktop applications, scientific computing platforms, instrument integration and data acquisition systems
+            for research and technical teams.</p>
+        </div>
+      </div>
+
+      <div class="deployment-label">From Idea to Deployment</div>
+
+      <div class="deployment-grid reveal" style="transition-delay:0.18s">
+        <div class="deployment-card">
+          <div class="app-card-icon">
+            <img src="pic/About Us/Rapid Prototyping & R&D.png" alt="Rapid Prototyping & R&D" />
+          </div>
+          <div class="deployment-card-content">
+            <h3>Rapid Prototyping &amp; R&amp;D</h3>
+            <p>From feasibility to MVP — we rapidly prototype and validate ideas to de-risk innovation and establish a
+              clear pathway to production deployment.</p>
+          </div>
+        </div>
+
+        <div class="deployment-arrow" aria-hidden="true">→</div>
+
+        <div class="deployment-card">
+          <div class="app-card-icon">
+            <img src="pic/About Us/Secure & Compliant Deployment.png" alt="Secure & Compliant Deployment" />
+          </div>
+          <div class="deployment-card-content">
+            <h3>Secure &amp; Compliant Deployment</h3>
+            <p>Production-grade architectures designed to meet sector-specific compliance, data governance and security
+              requirements from day one.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW WE WORK -->
+  <!-- HOW WE WORK -->
+  <section id="approach">
+    <div class="approach-inner">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">How We Work</div>
+        <h2 class="section-title" style="color:#fff;">Our Approach</h2>
+        <p class="section-lead">From problem to production, we follow a practical, iterative engineering process focused
+          on real-world outcomes.</p>
+      </div>
+
+      <div class="approach-grid reveal" style="transition-delay:0.1s">
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <circle cx="13" cy="13" r="8"></circle>
+              <path d="M19 19l8 8"></path>
+              <path d="M9 13h8M13 9v8"></path>
+            </svg>
+          </div>
+          <div class="approach-tag"><span></span>Step 1</div>
+          <h3>Understand the Problem</h3>
+          <p>We start by understanding your goals, domain, data and constraints — defining the right problem before
+            designing the solution.</p>
+        </div>
+
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <rect x="6" y="5" width="15" height="19" rx="2"></rect>
+              <path d="M10 10h7M10 14h5M10 18h7"></path>
+              <circle cx="23" cy="22" r="5"></circle>
+              <path d="M21 22l1.5 1.5L25 20"></path>
+            </svg>
+          </div>
+          <div class="approach-tag"><span></span>Step 2</div>
+          <h3>Prototype &amp; Validate</h3>
+          <p>We build focused prototypes and test them against real data early — validating feasibility and reducing
+            development risk.</p>
+        </div>
+
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path d="M16 4l10 6-10 6-10-6 10-6z"></path>
+              <path d="M6 10v12l10 6 10-6V10M16 16v12"></path>
+            </svg>
+          </div>
+          <div class="approach-tag"><span></span>Step 3</div>
+          <h3>Build &amp; Iterate</h3>
+          <p>We develop and refine the solution iteratively, incorporating feedback and validating performance against
+            real operational needs.</p>
+        </div>
+
+        <div class="approach-card">
+          <div class="approach-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <path d="M5 17c4-8 10-11 20-10l2 2c1 10-2 16-10 18l-4-4-4-1-4-5z"></path>
+              <path d="M13 20l6-6"></path>
+              <path d="M21 9l3-3M9 23l-3 3"></path>
+              <circle cx="20" cy="12" r="1.5"></circle>
+            </svg>
+          </div>
+          <div class="approach-tag"><span></span>Step 4</div>
+          <h3>Deploy &amp; Support</h3>
+          <p>We support deployment, integration and ongoing improvement as the solution moves into real-world use.</p>
+        </div>
+      </div>
+
+      <div class="approach-bottom reveal" style="transition-delay:0.18s">
+        <div class="approach-outcome">
+          <div class="approach-bottom-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32">
+              <circle cx="16" cy="16" r="12"></circle>
+              <circle cx="16" cy="16" r="5"></circle>
+              <path d="M16 4v7M28 16h-7M16 28v-7M4 16h7"></path>
+              <path d="M16 16l7-7"></path>
+            </svg>
+          </div>
+          <p><strong>Focused on real outcomes.</strong> We combine deep technical expertise with domain understanding to
+            deliver solutions that are practical, reliable and built to make a difference.</p>
+        </div>
+        <div class="approach-divider"></div>
+        <div class="approach-collab">
+          <div class="approach-bottom-icon" aria-hidden="true" style="border:0;">
+            <svg viewBox="0 0 32 32">
+              <circle cx="11" cy="10" r="4"></circle>
+              <circle cx="22" cy="11" r="3.5"></circle>
+              <path d="M4 25c.5-5 3.5-7.5 7-7.5s6.5 2.5 7 7.5M18 24c.4-3.8 2.5-6 5-6 2.8 0 4.7 2 5 6"></path>
+            </svg>
+          </div>
+          <p>Collaborative.<br>Transparent.<br>Results-driven.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY BINARIS -->
+  <section id="why-us">
+    <div class="why-inner">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Why BINARIS</div>
+        <h2 class="section-title">What Sets Us Apart</h2>
+        <p class="section-lead">Deep technical expertise. Practical engineering.<br>Solutions built around real-world
+          problems.</p>
+      </div>
+      <div class="why-grid reveal" style="transition-delay:0.1s">
+        <div class="why-card">
+          <span class="why-card-number">01</span>
+          <div class="why-card-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path
+                d="M18 8c-5 0-8 4-8 8 0 2 .7 3.8 2 5.2-2.3 1.6-3.7 4.3-3.7 7.2 0 5 3.9 9.1 8.8 9.4M30 8c5 0 8 4 8 8 0 2-.7 3.8-2 5.2 2.3 1.6 3.7 4.3 3.7 7.2 0 5-3.9 9.1-8.8 9.4M18 8v32M30 8v32M18 15h-4M30 15h4M18 24h-5M30 24h5M18 33h-4M30 33h4M22 13h4M22 22h4M22 31h4" />
+              <circle cx="18" cy="8" r="2" />
+              <circle cx="30" cy="8" r="2" />
+            </svg>
+          </div>
+          <h3>Deep Technical Expertise</h3>
+          <div class="why-card-divider"></div>
+          <p>A specialist team with strong expertise in AI, computer vision, scientific computing and engineering
+            software for technically complex challenges.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card-number">02</span>
+          <div class="why-card-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="14" r="6" />
+              <circle cx="12" cy="22" r="5" />
+              <circle cx="36" cy="22" r="5" />
+              <path
+                d="M14 39c.5-8 4.5-12 10-12s9.5 4 10 12M3 39c.3-6 3.4-9 8-9 2.4 0 4.4.8 5.8 2.4M45 39c-.3-6-3.4-9-8-9-2.4 0-4.4.8-5.8 2.4" />
+            </svg>
+          </div>
+          <h3>Domain-Driven Engineering</h3>
+          <div class="why-card-divider"></div>
+          <p>We combine technical development with deep understanding of the scientific, industrial and operational
+            context to build the right solution.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card-number">03</span>
+          <div class="why-card-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="24" cy="25" r="15" />
+              <path d="M24 10V6M18 6h12M24 25l8-8M34 13l3-3M13 25h3M32 33l3 3" />
+              <path d="M17 20c2-4 6-6 10-6" />
+            </svg>
+          </div>
+          <h3>Fast, Practical Delivery</h3>
+          <div class="why-card-divider"></div>
+          <p>We move quickly from problem definition to validated prototypes, reducing risk and helping you make
+            confident decisions early.</p>
+        </div>
+        <div class="why-card">
+          <span class="why-card-number">04</span>
+          <div class="why-card-icon">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <path
+                d="M5 25l8-7c2-2 4-2 6 0l3 3M43 25l-8-7c-2-2-4-2-6 0l-3 3M17 30l7-7 7 7M12 25l9 10c2 2 4 2 6 0l9-10M5 25l7 8M43 25l-7 8" />
+              <path d="M19 18l4-4c2-2 4-2 6 0l3 3" />
+            </svg>
+          </div>
+          <h3>Flexible Technical Partnership</h3>
+          <div class="why-card-divider"></div>
+          <p>We work alongside your team as a trusted partner, adapting our engagement to your goals, project stage and
+            technical requirements.</p>
+        </div>
+      </div>
+      <div class="why-outcome reveal" style="transition-delay:0.18s">
+        <div class="why-outcome-main">
+          <div class="why-outcome-icon"><svg viewBox="0 0 48 48" aria-hidden="true">
+              <circle cx="22" cy="24" r="16" />
+              <circle cx="22" cy="24" r="9" />
+              <circle cx="22" cy="24" r="3" />
+              <path d="M22 24 39 7M34 7h5v5" />
+            </svg></div>
+          <p class="why-outcome-copy"><strong>Focused on real outcomes.</strong> We combine deep technical expertise
+            with domain understanding and practical engineering to deliver solutions that are measurable, reliable and
+            built to make a difference.</p>
+        </div>
+        <div class="why-outcome-values">
+          <svg viewBox="0 0 48 48" aria-hidden="true">
+            <circle cx="17" cy="16" r="6" />
+            <circle cx="31" cy="17" r="5" />
+            <path d="M6 39c1-10 5-15 11-15s10 5 11 15M27 27c1-3 3-5 5-5 6 0 9 6 10 15" />
+          </svg>
+          <span>Collaborative</span><span>Transparent</span><span>Results-driven</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section id="page-cta">
+    <h2>Ready to work with us?</h2>
+    <p>Tell us about your project — our team will get back to you within one business day.</p>
+    <a href="#" class="page-cta-btn" onclick="openModal(event)">
+      Get In Touch
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="2.2">
+        <polyline points="4 8 12 8" />
+        <polyline points="8 4 12 8 8 12" />
+      </svg>
+    </a>
+  </section>
+  <!-- FOOTER -->
+  <footer id="footer">
+    <div class="footer-inner">
+      <div class="footer-top">
+
+        <div class="footer-brand">
+          <a href="index.html" class="footer-brand-logo" aria-label="BINARIS home">
+            <img class="footer-logo-mark" src="pic/Binaris-Logo-22.png" alt="" aria-hidden="true">
+            <div class="nav-Logo">
+              <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" alt="BINARIS AI & Engineering"></div>
+              <div>- AI &amp; ENGINEERING -</div>
+            </div>
+          </a>
+
+          <p>
+            AI, computer vision and engineering software for complex
+            scientific, industrial and business challenges.
+          </p>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="1" y="3" width="14" height="10" rx="1"></rect>
+              <polyline points="1 4 8 9 15 4"></polyline>
+            </svg>
+            <a href="mailto:info@binaris.com.au">info@binaris.com.au</a>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"></path>
+              <circle cx="8" cy="6" r="1.5"></circle>
+            </svg>
+            <span>Melbourne, Australia</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5"></circle>
+              <path d="M1.5 8h13"></path>
+              <path d="M8 1.5c2 2 3 4.1 3 6.5s-1 4.5-3 6.5"></path>
+              <path d="M8 1.5C6 3.5 5 5.6 5 8s1 4.5 3 6.5"></path>
+            </svg>
+            <span>Working with clients across Australia and beyond.</span>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+          <ul class="footer-links">
+            <li><a href="ai-machine-learning.html">AI &amp; Machine Learning</a></li>
+            <li><a href="ai-agents-automation.html">AI Agents &amp; Automation</a></li>
+            <li><a href="computer-vision.html">Computer Vision &amp; Imaging</a></li>
+            <li><a href="engineering-software.html">Scientific &amp; Engineering Software</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="About.html">About Us</a></li>
+            <li><a href="index.html#footer">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 BINARIS. All rights reserved.</span>
+        <div class="footer-legal"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleNav() { document.getElementById('mainNav').classList.toggle('mobile-open'); }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+  <script src="contact-form.js"></script>
+</body>
+
+</html>
+
+

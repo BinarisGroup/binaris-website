@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manufacturing — BINARIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00559e;
+      --primary-dark: #004078;
+      --primary-deeper: #0b3051;
+      --secondary: #373735;
+      --accent: #00b4d8;
+      --accent-warm: #f0a500;
+      --light-bg: #eaeaea;
+      --white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-muted: #6b7280;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.15;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--primary-dark);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      /* font-weight: 800; */
+      color: var(--white);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+
+
+    }
+
+    .nav-logo img {
+      display: block;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-links li a {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1.125rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-links li a:hover {
+      background: rgba(0, 216, 205, .12);
+      color: #00d8cd;
+    }
+
+    .nav-cta-btn {
+      background-color: #14548c;
+      color: #fff !important;
+      padding: 0.45rem 1.1rem !important;
+      border-radius: 4px !important;
+    }
+
+    .nav-cta-btn:hover {
+      background: #00d8cd !important;
+      color: #003a4a !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* BREADCRUMB */
+    .breadcrumb-bar {
+      background: var(--primary-deeper);
+      padding: 1rem 2rem;
+    }
+
+    .breadcrumb-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .breadcrumb-inner a {
+      color: var(--accent);
+      transition: color 0.2s;
+    }
+
+    .breadcrumb-inner a:hover {
+      color: #fff;
+    }
+
+    .breadcrumb-sep {
+      opacity: 0.5;
+    }
+
+    .breadcrumb-current {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(135deg, #262626, #3a3a3a);
+      position: relative;
+      overflow: hidden;
+      padding: 4.5rem 2rem 5rem;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.06) 0, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.06) 0, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 32px);
+      pointer-events: none;
+    }
+
+    .page-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(0, 180, 216, 0.35), transparent 55%);
+      pointer-events: none;
+    }
+
+    .page-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      color: #fff;
+    }
+
+    .page-hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .page-hero-eyebrow::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+
+    .page-hero h1 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+    }
+
+    .page-hero p {
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 640px;
+    }
+
+    /* SECTION UTILITY */
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.8rem;
+    }
+
+    .section-eyebrow::before,
+    .section-eyebrow::after {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: var(--primary);
+      transform: rotate(45deg);
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-lead {
+      font-size: 1.02rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    /* APPLICATIONS GRID */
+    #applications {
+      background: var(--light-bg);
+      padding: 5rem 2rem;
+    }
+
+    .applications-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .app-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    .app-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 2rem 1.6rem;
+      border: 1px solid #e3e7ee;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+    }
+
+    .app-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 28px rgba(0, 60, 130, 0.1);
+      border-color: var(--accent);
+    }
+
+    .app-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      color: var(--text-dark);
+    }
+
+    .app-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* PROJECTS */
+    #projects {
+      background-color: #292929;
+      padding: 5rem 2rem;
+    }
+
+    #projects .section-eyebrow {
+      color: var(--accent);
+    }
+
+    #projects .section-eyebrow::before,
+    #projects .section-eyebrow::after {
+      background: var(--accent);
+    }
+
+    #projects .section-title {
+      color: #fff;
+    }
+
+    #projects .section-lead {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .projects-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .project-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem;
+      margin-top: 3rem;
+    }
+
+    .project-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: border-color 0.25s, background 0.25s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .project-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .project-tag span {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      transform: rotate(45deg);
+      display: inline-block;
+    }
+
+    .project-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .project-card p {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.7;
+    }
+
+    /* CTA */
+    #page-cta {
+      background: var(--primary);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    #page-cta h2 {
+      color: #fff;
+      font-size: clamp(1.5rem, 2.5vw, 2rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    #page-cta p {
+      color: rgba(255, 255, 255, 0.85);
+      max-width: 560px;
+      margin: 0 auto 2rem;
+      line-height: 1.7;
+    }
+
+    .page-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background-color: #00d8cd;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: filter 0.2s, transform 0.2s;
+    }
+
+    .page-cta-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    /* BACK LINK */
+    .back-link-wrap {
+      background: var(--light-bg);
+      padding: 1.5rem 2rem 0;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .back-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--primary);
+      fill: none;
+      stroke-width: 2.2;
+    }
+
+    .back-link:hover {
+      color: var(--primary-dark);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--secondary);
+      padding: 4rem 2rem 2rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand-logo {
+      /* font-size: 1.1rem; */
+      /* font-weight: 800;
+      color: #fff; */
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-brand-logo .fb-diamond {
+      width: 40px;
+      height: 48px;
+      background-image: url('pic/Binaris-Logo-22.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-location {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links li a {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+
+    .footer-links li a:hover {
+      color: #fff;
+    }
+
+    .footer-contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.83rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .footer-contact-link:hover {
+      color: #33e5dc;
+    }
+
+    .footer-email {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.4rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .fbd {
+      width: 7px;
+      height: 7px;
+      background: rgba(255, 255, 255, 0.2);
+      transform: rotate(45deg);
+    }
+
+    .fbd:nth-child(2) {
+      background: var(--accent);
+      opacity: 0.6;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================================
+       MANUFACTURING OVERVIEW — same pattern as Healthcare overview
+    ============================================================ */
+    #manufacturing-overview {
+      padding: 80px 20px;
+      background: #fff;
+    }
+
+    .overview-grid {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr 1fr;
+      gap: 35px;
+      align-items: start;
+    }
+
+    .overview-intro p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-top: 15px;
+    }
+
+    /* Column header colours — purple / teal / blue (same as Healthcare) */
+    .overview-column1 h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #7c3fca;
+    }
+
+    .overview-column2 h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: #066c63;
+    }
+
+    .overview-column3 h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .mini-card {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      padding: 14px;
+      border: 1px solid #e7edf4;
+      border-radius: 12px;
+      transition: .25s;
+      background: white;
+      width: 15rem;
+      height: 11rem;
+    }
+
+    .mini-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: 0 8px 20px rgba(0, 85, 158, .08);
+    }
+
+    .icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: #edf5fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    /* Tag heading colours — same convention as Healthcare */
+    .mini-card h41 {
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #7c3fca;
+      font-weight: 600;
+    }
+
+    .mini-card h42 {
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #066c63;
+      font-weight: 600;
+    }
+
+    .mini-card h43 {
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #00559e;
+      font-weight: 600;
+    }
+
+    .mini-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 1000px) {
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .app-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .project-list {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.8rem;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .app-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    nav.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--primary-dark);
+      padding: 1rem 2rem 1.5rem;
+      gap: 0.3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 999;
+    }
+
+    nav.mobile-open {
+      position: sticky;
+      top: 0;
+    }
+
+    /* ===================== BINARIS FOOTER ===================== */
+
+    footer#footer {
+      position: relative;
+      overflow: hidden;
+      /* background: linear-gradient(135deg,
+          #07111f 0%,
+          #081725 58%,
+          #06101d 100%); */
+      padding: 4.5rem 2rem 1.8rem;
+      color: rgba(255, 255, 255, 0.68);
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    footer#footer *,
+    footer#footer *::before,
+    footer#footer *::after {
+      box-sizing: border-box;
+    }
+
+    footer#footer a {
+      text-decoration: none;
+    }
+
+    footer#footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px),
+        linear-gradient(90deg,
+          rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px);
+      background-size: 34px 34px;
+      -webkit-mask-image: linear-gradient(to right, #000, transparent 70%);
+      mask-image: linear-gradient(to right, #000, transparent 70%);
+      pointer-events: none;
+    }
+
+    footer#footer .footer-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    footer#footer .footer-top {
+      display: grid;
+      grid-template-columns:
+        minmax(340px, 1.65fr) minmax(220px, 1fr) minmax(150px, 0.7fr);
+      gap: clamp(2.5rem, 6vw, 6rem);
+      padding-bottom: 3.2rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    /* Brand */
+
+    footer#footer .footer-brand-logo {
+      height: 60px;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    footer#footer .footer-brand-logo img {
+      display: block;
+      object-fit: contain;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-mark {
+      width: 57px;
+      height: 57px;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-wordmark {
+      width: 135px;
+      height: auto;
+      max-height: 38px;
+    }
+
+    footer#footer .footer-brand>p {
+      max-width: 410px;
+      margin: 0 0 1.25rem;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    /* Contact information */
+
+    footer#footer .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    footer#footer .footer-contact-item svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      fill: none;
+      stroke: #00b4d8;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    footer#footer .footer-contact-item a {
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-contact-item a:hover {
+      color: #00d8cd;
+    }
+
+    /* Footer columns */
+
+    footer#footer .footer-col h4 {
+      margin: 0 0 1.25rem;
+      color: #fff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    footer#footer .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    footer#footer .footer-links li a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a::after {
+      content: "›";
+      flex-shrink: 0;
+      color: #00b4d8;
+      font-size: 1.05rem;
+      line-height: 1;
+      opacity: 0.85;
+      transform: translateX(0);
+      transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a:hover {
+      color: #fff;
+      border-bottom-color: rgba(0, 216, 205, 0.25);
+    }
+
+    footer#footer .footer-links li a:hover::after {
+      color: #00d8cd;
+      transform: translateX(4px);
+    }
+
+    /* Bottom bar */
+
+    footer#footer .footer-bottom {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      color: rgba(255, 255, 255, 0.44);
+      font-size: 0.72rem;
+    }
+
+    footer#footer .footer-legal {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    footer#footer .footer-legal a {
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-legal a:hover {
+      color: #00d8cd;
+    }
+
+    footer#footer .footer-legal-sep {
+      width: 1px;
+      height: 13px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Tablet */
+
+    @media (max-width: 900px) {
+      footer#footer .footer-top {
+        grid-template-columns: 1.25fr 1fr;
+        gap: 2.5rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+      footer#footer {
+        padding: 3.5rem 1.25rem 1.5rem;
+      }
+
+      footer#footer .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: auto;
+      }
+
+      footer#footer .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      footer#footer .footer-legal {
+        flex-wrap: wrap;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="pic/Binaris-Logo-22.png" width="75" height="75" alt="BINARIS">
+        <div class="nav-Logo">
+          <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" alt="BINARIS AI & Engineering"></div>
+          <div> - AI & ENGINEERING -</div>
+        </div>
+
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#Services">Services</a></li>
+        <li><a href="index.html#industries">Industries</a></li>
+        <li><a href="index.html#case-studies">Case studies</a></li>
+        <li><a href="index.html#WhyBINARIS">Why BINARIS</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="#" class="nav-cta-btn" onclick="openModal(event)">Contact Us</a></li>
+      </ul>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleNav()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- <div class="breadcrumb-bar">
+    <div class="breadcrumb-inner">
+      <a href="index.html">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      <a href="index.html#industries">Industries</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Manufacturing</span>
+    </div>
+  </div> -->
+
+  <section class="page-hero">
+    <div class="page-hero-inner reveal">
+      <img src="Manufacturing/hero-logo.webp" width="130px" height="130px">
+      <div class="page-hero-eyebrow">Industry Focus</div>
+      <h1>AI &amp; Industrial Intelligence for Manufacturing</h1>
+      <p>Manufacturers are under constant pressure to increase productivity, improve product quality and reduce
+        operational costs. BINARIS develops industrial AI, computer vision and engineering software that transform
+        production environments into intelligent, connected and data-driven manufacturing operations.</p>
+    </div>
+  </section>
+
+  <!-- ========================= -->
+  <!-- MANUFACTURING OVERVIEW    -->
+  <!-- ========================= -->
+  <section id="manufacturing-overview">
+    <div class="applications-inner">
+
+      <div class="overview-grid">
+
+        <!-- Overview Intro -->
+        <div class="overview-intro reveal">
+          <div class="section-eyebrow">Industry Overview</div>
+          <h2 class="section-title">AI &amp; Manufacturing</h2>
+          <p>
+            Factory floors are generating more data than ever — from sensors, vision
+            systems, ERP platforms and production equipment — but most of it goes
+            unanalysed. At the same time, skilled labour is harder to find, supply
+            chains are increasingly volatile and customer tolerance for quality failures
+            is near zero. Manufacturers who continue to rely on manual inspection,
+            reactive maintenance and intuition-based scheduling are falling behind.
+            The gap between those who use their operational data intelligently and
+            those who don't is widening every year.
+          </p>
+        </div>
+
+        <!-- Column 1 — Key Challenges (purple) -->
+        <div class="overview-column1 reveal">
+          <h3>Key Challenges</h3>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Quality Control Complexity.png" />
+            </div>
+            <div>
+              <h41>Quality Control Complexity</h41>
+              <p>Manual inspection is slow, inconsistent and unable to scale with production volumes.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Unplanned Downtime.png" />
+            </div>
+            <div>
+              <h41>Unplanned Downtime</h41>
+              <p>Unexpected equipment failures disrupt production and drive up maintenance costs.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Supply Chain Volatility.png" />
+            </div>
+            <div>
+              <h41>Production Inefficiency</h41>
+              <p>Bottlenecks, variable processes and inefficient scheduling limit production capacity.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Skills Shortage.png" />
+            </div>
+            <div>
+              <h41>Skills Shortage</h41>
+              <p>A shrinking skilled workforce increases reliance on automation and intelligent tooling.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 2 — AI Opportunities (teal) -->
+        <div class="overview-column2 reveal">
+          <h3>AI Opportunities</h3>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Visual Quality Inspection.png" />
+            </div>
+            <div>
+              <h42>Visual Quality Inspection</h42>
+              <p>Real-time defect detection on the production line using computer vision.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Predictive Maintenance.png" />
+            </div>
+            <div>
+              <h42>Predictive Maintenance</h42>
+              <p>ML models that monitor sensor data to flag equipment failure risk before it occurs.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Production Optimisation.png" />
+            </div>
+            <div>
+              <h42>Production Optimisation</h42>
+              <p>AI-driven scheduling and resource allocation to maximise throughput and reduce waste.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Process Automation.png" />
+            </div>
+            <div>
+              <h42>Process Automation</h42>
+              <p>Intelligent agents that automate repetitive tasks and integrate with ERP and MES systems.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Column 3 — Business Benefits (blue) -->
+        <div class="overview-column3 reveal">
+          <h3>Business Benefits</h3>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Reduced Scrap & Rework.png" />
+            </div>
+            <div>
+              <h43>Reduced Scrap &amp; Rework</h43>
+              <p>Catch defects earlier to eliminate costly downstream rework and material waste.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Lower Maintenance Costs.png" />
+            </div>
+            <div>
+              <h43>Higher Equipment Availability</h43>
+              <p>Predict failures earlier to reduce unplanned downtime and improve asset availability.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Higher Throughput.png" />
+            </div>
+            <div>
+              <h43>Higher Throughput</h43>
+              <p>Optimise line speed and capacity utilisation without increasing headcount.</p>
+            </div>
+          </div>
+
+          <div class="mini-card">
+            <div class="icon">
+              <img src="pic/Industries/Manufacturing/Improved OEE.png" />
+            </div>
+            <div>
+              <h43>Higher Workforce Productivity</h43>
+              <p>Raise Overall Equipment Effectiveness across availability, performance and quality.</p>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end .overview-grid -->
+
+    </div>
+  </section>
+  <!-- ========================= -->
+
+  <section id="applications">
+    <div class="applications-inner">
+      <div class="section-header reveal">
+        <div class="section-eyebrow">Where AI Helps</div>
+        <h2 class="section-title">Example Solutions</h2>
+        <p class="section-lead">High-impact production challenges where intelligent automation creates immediate value.
+        </p>
+      </div>
+      <div class="app-grid reveal" style="transition-delay:0.1s">
+        <div class="app-card">
+          <img src="Manufacturing/Manufacturing-1.png" width="274px" height="272px">
+          <h3>Visual Quality Inspection</h3>
+          <p>Computer vision systems that detect defects, dimensional errors and surface flaws on the production line in
+            real time.</p>
+        </div>
+        <div class="app-card">
+          <img src="Manufacturing/Manufacturing-2.png" width="274px" height="272px">
+          <h3>Robotics &amp; Process Automation</h3>
+          <p>AI agents and vision-guided robotics that automate repetitive tasks and improve line throughput.</p>
+        </div>
+        <div class="app-card">
+          <img src="Manufacturing/Manufacturing-3.png" width="274px" height="272px">
+          <h3>Predictive Maintenance</h3>
+          <p>ML models that monitor equipment sensor data to predict failures before they cause unplanned downtime.</p>
+        </div>
+        <div class="app-card">
+          <img src="Manufacturing/Manufacturing-4.png" width="274px" height="272px">
+          <h3>Production &amp; Supply Chain Optimization</h3>
+          <p>Predictive scheduling and resource allocation that reduce waste and bottlenecks across the supply chain.
+          </p>
+        </div>
+        <div class="app-card">
+          <img src="Manufacturing/Manufacturing-5.png" width="274px" height="272px">
+          <h3>Real-Time Plant Analytics</h3>
+          <p>Live dashboards and KPI tracking that give plant managers visibility into throughput, yield and efficiency.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="page-cta">
+    <h2>Exploring an AI project in manufacturing?</h2>
+    <p>Tell us about your quality, automation or maintenance challenge — our team will get back to you within one
+      business day.</p>
+    <a href="index.html#footer" class="page-cta-btn">
+      Talk to Our Team
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#000" stroke-width="2.2">
+        <polyline points="4 8 12 8" />
+        <polyline points="8 4 12 8 8 12" />
+      </svg>
+    </a>
+  </section>
+
+
+  <footer id="footer">
+    <div class="footer-inner">
+
+      <div class="footer-top">
+
+        <!-- Brand and contact information -->
+        <div class="footer-brand">
+
+          <a href="index.html" class="footer-brand-logo" aria-label="BINARIS home">
+            <img class="footer-logo-mark" src="pic/Binaris-Logo-22.png" alt="" aria-hidden="true">
+            <div class="nav-Logo">
+              <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" alt="BINARIS AI & Engineering"></div>
+              <div> - AI & ENGINEERING -</div>
+            </div>
+
+          </a>
+
+          <p>
+            AI, computer vision and engineering software for complex
+            scientific, industrial and business challenges.
+          </p>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="1" y="3" width="14" height="10" rx="1"></rect>
+              <polyline points="1 4 8 9 15 4"></polyline>
+            </svg>
+
+            <a href="mailto:info@binaris.com.au">
+              info@binaris.com.au
+            </a>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"></path>
+              <circle cx="8" cy="6" r="1.5"></circle>
+            </svg>
+
+            <span>Melbourne, Australia</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5"></circle>
+              <path d="M1.5 8h13"></path>
+              <path d="M8 1.5c2 2 3 4.1 3 6.5s-1 4.5-3 6.5"></path>
+              <path d="M8 1.5C6 3.5 5 5.6 5 8s1 4.5 3 6.5"></path>
+            </svg>
+
+            <span>Working with clients across Australia and beyond.</span>
+          </div>
+
+        </div>
+
+        <!-- Capabilities -->
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+
+          <ul class="footer-links">
+            <li>
+              <a href="ai-machine-learning.html">
+                AI &amp; Machine Learning
+              </a>
+            </li>
+
+            <li>
+              <a href="ai-agents-automation.html">
+                AI Agents &amp; Automation
+              </a>
+            </li>
+
+            <li>
+              <a href="computer-vision.html">
+                Computer Vision &amp; Imaging
+              </a>
+            </li>
+
+            <li>
+              <a href="engineering-software.html">
+                Scientific &amp; Engineering Software
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="footer-col">
+          <h4>Company</h4>
+
+          <ul class="footer-links">
+            <li>
+              <a href="About.html">About Us</a>
+            </li>
+
+            <li>
+              <a href="#" onclick="openModal(event)">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer bottom -->
+      <div class="footer-bottom">
+        <span>© 2026 BINARIS. All rights reserved.</span>
+
+        <div class="footer-legal">
+          <!-- <a href="privacy-policy.html">Privacy Policy</a> -->
+
+          <!-- <span class="footer-legal-sep" aria-hidden="true"></span>-->
+
+          <!-- <a href="terms-of-use.html">Terms of Use</a> -->
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <script>
+    function toggleNav() { document.getElementById('mainNav').classList.toggle('mobile-open'); }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+  <script src="contact-form.js"></script>
+</body>
+
+</html>
+
+

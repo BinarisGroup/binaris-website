@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Guided Multivariable Optimisation — Case Study — BINARIS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #00559e;
+      --primary-dark: #004078;
+      --primary-deeper: #0b3051;
+      --secondary: #373735;
+      --accent: #00b4d8;
+      --accent-warm: #f0a500;
+      --light-bg: #f0f4f9;
+      --white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-muted: #6b7280;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text-dark);
+      background: var(--white);
+      overflow-x: hidden;
+      line-height: 1.6;
+      padding-bottom: clamp(3rem, 4.5vw, 4.625rem);
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.15;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--primary-dark);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      /* font-weight: 800; */
+      color: var(--white);
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 1px;
+
+
+    }
+
+    .nav-logo img {
+      display: block;
+      object-fit: contain;
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 0.25rem;
+    }
+
+    .nav-links li a {
+      color: rgba(255, 255, 255, 0.88);
+      font-size: 1.05rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      background: rgba(0, 216, 205, .12);
+      color: #00d8cd;
+    }
+
+    .nav-cta-btn {
+      background-color: transparent !important;
+      color: #fff !important;
+      border: 1.5px solid rgba(255, 255, 255, 0.5) !important;
+      padding: 0.4rem 1.1rem !important;
+      border-radius: 4px !important;
+    }
+
+    .nav-cta-btn:hover {
+      border-color: #00d8cd !important;
+      color: #00d8cd !important;
+      background: transparent !important;
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 6px;
+    }
+
+    .nav-hamburger span {
+      width: 24px;
+      height: 2px;
+      background: #fff;
+      border-radius: 2px;
+    }
+
+    nav.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 68px;
+      left: 0;
+      right: 0;
+      background: var(--primary-dark);
+      padding: 1rem 2rem 1.5rem;
+      gap: 0.3rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 999;
+    }
+
+    @media(max-width:900px) {
+      .nav-links {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+    }
+
+    /* HERO */
+    #case-hero {
+      background: linear-gradient(160deg, #001830 0%, #032a73 60%, #003a5e 100%);
+      position: relative;
+      overflow: hidden;
+      padding: 2rem 1rem 0;
+      min-height: 400px;
+    }
+
+    #case-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.05) 0, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 32px), repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.05) 0, rgba(255, 255, 255, 0.05) 1px, transparent 1px, transparent 32px);
+      pointer-events: none;
+    }
+
+    .hero-text-col {
+      padding-top: 0;
+    }
+
+    .case-hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 3rem;
+      /* align-items: end; */
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.55);
+      margin-bottom: 1.2rem;
+    }
+
+    .breadcrumb a {
+      color: rgba(255, 255, 255, 0.75);
+      transition: color 0.2s;
+    }
+
+    .breadcrumb a:hover {
+      color: var(--accent);
+    }
+
+    .breadcrumb .sep {
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    .case-tag {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .founder-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #7dd3fc;
+      background: rgba(125, 211, 252, 0.12);
+      border: 1px solid rgba(125, 211, 252, 0.35);
+      padding: 0.35rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 1.2rem;
+    }
+
+    #case-hero h1 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.9rem;
+      line-height: 1.1;
+    }
+
+    #case-hero .sub {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.75);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      max-width: 500px;
+    }
+
+    #case-hero .lead {
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 2rem;
+    }
+
+    .hero-btns {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      padding-bottom: 3rem;
+    }
+
+    .hero-btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      transition: filter 0.2s;
+    }
+
+    .hero-btn-primary:hover {
+      filter: brightness(1.1);
+    }
+
+    .hero-btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .hero-btn-secondary:hover {
+      color: #fff;
+    }
+
+    .hero-btn-secondary svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .hero-image-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-bottom: 0;
+    }
+
+    .hero-image-col img {
+      width: 100%;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 -16px 40px rgba(0, 180, 216, 0.18);
+    }
+
+    .hero-image-caption {
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-top: 0.6rem;
+      text-align: center;
+      padding-bottom: 1rem;
+      font-style: italic;
+    }
+
+    /* PROBLEM SECTION */
+    #problem {
+      background: #fff;
+      padding: 3.35rem 2rem;
+    }
+
+    .problem-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(320px, 1.28fr) minmax(620px, 2fr);
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .problem-text h2 {
+      font-size: clamp(1.45rem, 2.4vw, 2rem);
+      font-weight: 800;
+      color: var(--primary-deeper);
+      margin-bottom: 1.2rem;
+    }
+
+    .problem-text p {
+      max-width: 440px;
+      font-size: 1rem;
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .problem-card {
+      min-height: 192px;
+      display: block;
+      background: #fff;
+      border: 1px solid #e7ebf0;
+      border-radius: 10px;
+      padding: 1.35rem 1.2rem 1.25rem;
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.10);
+    }
+
+    .problem-card-icon {
+      width: 100%;
+      height: 56px;
+      display: flex;
+      align-items: flex-start;
+      color: var(--primary-deeper);
+      margin-bottom: 0.55rem;
+    }
+
+    .problem-card-icon svg {
+      width: 56px;
+      height: 56px;
+      stroke: currentColor;
+    }
+
+    .problem-card h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.55rem;
+    }
+
+    .problem-card p {
+      font-size: 0.8rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    /* DEMONSTRATED APPLICATION */
+    #application {
+      background: #f2f7ff;
+      padding: 1rem 2rem;
+    }
+
+    .app-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(430px, 0.95fr) minmax(480px, 1.05fr);
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    .app-text h2 {
+      font-size: clamp(1.45rem, 2.35vw, 1.9rem);
+      font-weight: 800;
+      color: var(--primary-deeper);
+      margin-bottom: 0.8rem;
+    }
+
+    .app-text p {
+      max-width: 510px;
+      font-size: 0.94rem;
+      color: #24364b;
+      line-height: 1.62;
+      margin-bottom: 1.25rem;
+    }
+
+    .app-params {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      flex-wrap: nowrap;
+    }
+
+    .app-param {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 47px;
+      border: 1.5px solid #5eb5bd;
+      border-radius: 7px;
+      padding: 0.45rem 0.85rem;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: rgba(255, 255, 255, 0.62);
+      white-space: nowrap;
+    }
+
+    .app-param-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--primary-deeper);
+      flex: 0 0 20px;
+    }
+
+    .app-param-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      stroke: currentColor;
+    }
+
+    .app-image {
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-image img {
+      width: 100%;
+      max-height: 275px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .app-image-placeholder {
+      width: 100%;
+      height: 260px;
+      /* background: linear-gradient(135deg, #fff, #fff); */
+      /* background: var(--light-bg); */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 14px;
+    }
+
+    .app-image-placeholder .biosensor-icon {
+      font-size: 5rem;
+    }
+
+    /* PIPELINE / FLOW */
+    #pipeline {
+      background: #fff;
+      padding: 3.4rem 2rem 4rem;
+    }
+
+    .pipeline-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pipeline-inner h2 {
+      font-size: clamp(1.45rem, 2.4vw, 2rem);
+      font-weight: 800;
+      color: var(--primary-deeper);
+      margin-bottom: 1.65rem;
+      text-align: left;
+    }
+
+    .pipeline-steps {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 42px minmax(0, 1fr) 42px minmax(0, 1fr) 42px minmax(0, 1fr) 42px minmax(0, 1fr);
+      gap: 0;
+      align-items: center;
+      position: relative;
+    }
+
+    .pipeline-step {
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      padding: 1.25rem 0.85rem 1.1rem;
+      background: #fff;
+      border: 1px solid #e7ebf0;
+      border-radius: 10px;
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.10);
+    }
+
+    .pipeline-step-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.82rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0;
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      z-index: 1;
+    }
+
+    .pipeline-step-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0.35rem 0 0.75rem;
+      color: var(--primary-deeper);
+      position: relative;
+    }
+
+    .pipeline-step-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      stroke: currentColor;
+    }
+
+    .validation-check {
+      position: absolute;
+      right: -5px;
+      bottom: -3px;
+      width: 29px;
+      height: 29px;
+      border-radius: 50%;
+      background: #39a844;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      font-size: 1.05rem;
+      font-weight: 800;
+    }
+
+    .pipeline-step h4 {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.4rem;
+      line-height: 1.3;
+    }
+
+    .pipeline-step p {
+      font-size: 0.78rem;
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    .pipeline-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: 0;
+    }
+
+    .pipeline-arrow svg {
+      width: 32px;
+      height: 32px;
+      stroke: var(--primary-deeper);
+      fill: none;
+      stroke-width: 1.8;
+    }
+
+    /* KEY METRIC DARK */
+    #key-metric {
+      background: var(--primary-deeper);
+      padding: 4rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #key-metric::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04) 0, rgba(255, 255, 255, 0.04) 1px, transparent 1px, transparent 32px);
+      pointer-events: none;
+    }
+
+    .metric-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 3rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .metric-badge {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: #16a34a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      flex-shrink: 0;
+      box-shadow: 0 0 30px rgba(22, 163, 74, 0.4);
+    }
+
+    .metric-content h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+    }
+
+    .metric-content h2 .highlight {
+      color: #4ade80;
+    }
+
+    .metric-content p {
+      font-size: 0.92rem;
+      color: rgba(255, 255, 255, 0.75);
+      line-height: 1.7;
+      max-width: 560px;
+      margin-bottom: 0.8rem;
+    }
+
+    .metric-validated {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #4ade80;
+    }
+
+    .metric-validated::before {
+      content: '✓';
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #16a34a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+    }
+
+    /* EXPERTISE */
+    #expertise {
+      background: #fff;
+      padding: 3.25rem 2rem 3.75rem;
+    }
+
+    .expertise-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .expertise-inner h2 {
+      font-size: clamp(1.4rem, 2.4vw, 1.85rem);
+      font-weight: 800;
+      color: var(--primary-deeper);
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .expertise-card {
+      min-height: 185px;
+      background: #fff;
+      border: 1px solid #e7ebf0;
+      border-radius: 10px;
+      padding: 1.25rem 1.15rem 1.15rem;
+      text-align: center;
+      box-shadow: 0 5px 16px rgba(15, 23, 42, 0.10);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .expertise-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .expertise-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 0.65rem;
+      color: var(--primary-deeper);
+    }
+
+    .expertise-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      stroke: currentColor;
+    }
+
+    .expertise-card h4 {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .expertise-card p {
+      font-size: 0.78rem;
+      color: #334155;
+      line-height: 1.5;
+    }
+
+    /* TRANSFERABLE */
+    #transferable {
+      background: #f2f7ff;
+      padding: 2.1rem 2rem 1.15rem;
+    }
+
+    .transfer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 1.5rem 2.2rem;
+      align-items: center;
+    }
+
+    .transfer-text h2 {
+      font-size: clamp(1.2rem, 2.2vw, 1.55rem);
+      font-weight: 800;
+      color: var(--primary-deeper);
+      margin-bottom: 0.55rem;
+    }
+
+    .transfer-text p {
+      font-size: 0.75rem;
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    .transfer-domains {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0;
+    }
+
+    .transfer-domain {
+      min-height: 112px;
+      background: transparent;
+      border: 0;
+      border-left: 1px solid #ccd6e3;
+      border-radius: 0;
+      padding: 0.15rem 0.55rem;
+      text-align: center;
+      transition: border-color 0.25s;
+    }
+
+    .transfer-domain:hover {
+      border-left-color: #75bfc6;
+    }
+
+    .transfer-domain-icon {
+      width: 58px;
+      height: 58px;
+      margin: 0 auto 0.35rem;
+      color: var(--primary-deeper);
+    }
+
+    .transfer-domain-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      stroke: currentColor;
+    }
+
+    .transfer-domain h4 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.3;
+    }
+
+    /* TECH BAR */
+    .tech-bar-wrap {
+      grid-column: 1 / -1;
+      width: 100%;
+      margin: 0;
+      background: rgba(255, 255, 255, 0.74);
+      border: 1px solid #e3eaf2;
+      border-radius: 7px;
+      padding: 0.7rem 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      flex-wrap: nowrap;
+    }
+
+    .tech-bar-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      flex-shrink: 0;
+      padding-right: 1.4rem;
+      margin-right: 1rem;
+      border-right: 1px solid #9eacbc;
+    }
+
+    .tech-bar-label svg {
+      width: 34px;
+      height: 27px;
+      stroke: var(--primary);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .tech-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--primary-deeper);
+      border-radius: 50%;
+    }
+
+    .tech-name {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #24364b;
+    }
+
+    /* SUPPORTING RESEARCH */
+    #research {
+      background: #fff;
+      padding: 2.2rem 2rem 3.25rem;
+      border-top: 1px solid #e8edf5;
+    }
+
+    .research-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .research-inner h2 {
+      font-size: clamp(1.35rem, 2.3vw, 1.75rem);
+      font-weight: 800;
+      color: var(--primary-deeper);
+      margin-bottom: 0.85rem;
+    }
+
+    .research-card {
+      background: #fff;
+      border: 1px solid #e6ebf1;
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      display: grid;
+      grid-template-columns: 150px minmax(0, 1fr) 245px;
+      gap: 1.35rem;
+      align-items: stretch;
+      box-shadow: 0 3px 12px rgba(15, 23, 42, 0.07);
+    }
+
+    .research-doc-icon {
+      width: 100%;
+      min-height: 126px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-deeper);
+      border-right: 1px solid #d8e0e9;
+      padding-right: 1.35rem;
+    }
+
+    .research-doc-icon svg {
+      width: 86px;
+      height: 104px;
+      display: block;
+      stroke: currentColor;
+    }
+
+    .research-content h3 {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.38rem;
+      font-style: normal;
+      letter-spacing: 0.03em;
+    }
+
+    .research-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary-deeper);
+      background: #f4f8fd;
+      border: 1px solid #6e91ba;
+      border-radius: 5px;
+      padding: 0.18rem 0.55rem;
+      margin-bottom: 0.38rem;
+    }
+
+    .research-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-bottom: 0.38rem;
+    }
+
+    .research-tag {
+      min-width: 110px;
+      text-align: center;
+      font-size: 0.67rem;
+      color: #667386;
+      background: #fff;
+      border: 1px solid #dde8f5;
+      border-radius: 6px;
+      padding: 0.17rem 0.55rem;
+    }
+
+    .research-pub-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-width: 330px;
+      font-size: 0.69rem;
+      color: #9ca3af;
+      background: #f5f6f8;
+      border: 1px solid #e0e4e9;
+      border-radius: 5px;
+      padding: 0.2rem 0.7rem;
+    }
+
+    .research-disclaimer {
+      display: flex;
+      align-items: center;
+      text-align: left;
+      font-size: 0.72rem;
+      color: #667386;
+      max-width: 245px;
+      line-height: 1.5;
+      /* border-left: 1px solid #d8e0e9; */
+      padding-left: 2rem;
+    }
+
+    /* CTA */
+    #page-cta {
+      background: var(--primary-deeper);
+      padding: 4.5rem 2rem;
+    }
+
+    .cta-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+    }
+
+    .cta-left h2 {
+      font-size: clamp(1.3rem, 2.4vw, 1.9rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.25;
+      margin-bottom: 0.5rem;
+    }
+
+    .cta-left p {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .cta-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: #00d8cd;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 6px;
+      transition: filter 0.2s, transform 0.2s;
+      white-space: nowrap;
+      border: none;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    /* STICKY CTA */
+    .sticky-cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      z-index: 900;
+      background-color: var(--primary-dark);
+      height: clamp(3rem, 4.5vw, 4.625rem);
+      display: flex;
+      align-items: center;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .sticky-cta-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: clamp(8rem, 14vw, 16rem);
+      height: 100%;
+      background: var(--primary);
+      clip-path: polygon(0 0, calc(100% - 1.5rem) 0, 100% 50%, calc(100% - 1.5rem) 100%, 0 100%);
+      pointer-events: none;
+    }
+
+    .sticky-cta-inner {
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 2rem 0 clamp(10rem, 16vw, 18rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .sticky-cta-text {
+      font-size: clamp(0.9rem, 1.4vw, 1.15rem);
+      color: #fff;
+    }
+
+    .sticky-cta-btn {
+      flex-shrink: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: #00d8cd;
+      color: #000;
+      font-weight: 700;
+      font-size: 0.82rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 0.6rem 1.4rem;
+      border-radius: 3px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .sticky-cta-btn:hover {
+      background: #33e5dc;
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--secondary);
+      padding: 4rem 2rem 2rem;
+      color: rgba(255, 255, 255, 0.75);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      gap: 2rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    .footer-brand-logo {
+      /* font-size: 1.1rem;
+      font-weight: 800;
+      color: #fff; */
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .footer-brand-logo .fb-diamond {
+      width: 40px;
+      height: 48px;
+      background-image: url('pic/BINARIS-Logo-2.png');
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-location {
+      font-size: 0.82rem;
+      color: rgba(255, 255, 255, 0.55);
+    }
+
+    .footer-col h4 {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .footer-links li a {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      transition: color 0.2s;
+    }
+
+    .footer-links li a:hover {
+      color: #fff;
+    }
+
+    .footer-contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.83rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .footer-contact-link:hover {
+      color: #33e5dc;
+    }
+
+    .footer-email {
+      font-size: 0.83rem;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 0.4rem;
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal {
+      background: #fff;
+      max-width: 480px;
+      width: 90%;
+      padding: 2.5rem;
+      position: relative;
+      border-top: 4px solid var(--primary);
+      transform: translateY(20px);
+      transition: transform 0.3s;
+    }
+
+    .modal-overlay.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal h3 {
+      font-size: 1.3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #888;
+    }
+
+    .modal-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-field label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: #555;
+    }
+
+    .modal-field input,
+    .modal-field textarea {
+      border: 1.5px solid #ddd;
+      padding: 0.65rem 0.9rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .modal-field input:focus,
+    .modal-field textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .modal-field textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .modal-submit {
+      width: 100%;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 0.8rem;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+
+    .modal-submit:hover {
+      background: var(--primary-dark);
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+
+      .problem-inner {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .problem-text p {
+        max-width: 620px;
+      }
+
+      .case-hero-inner,
+      .app-inner,
+      .transfer-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-image-col {
+        display: none;
+      }
+
+      .pipeline-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .pipeline-arrow {
+        display: none;
+      }
+
+      .expertise-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .transfer-domains {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .research-card {
+        grid-template-columns: 1fr;
+      }
+
+      .research-disclaimer {
+        max-width: 100%;
+        text-align: left;
+      }
+
+      .cta-inner {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media(max-width:640px) {
+      .tech-bar-wrap {
+        flex-wrap: wrap;
+      }
+
+      .tech-bar-label {
+        width: 100%;
+        padding-right: 0;
+        margin-right: 0;
+        padding-bottom: 0.6rem;
+        border-right: 0;
+        border-bottom: 1px solid #9eacbc;
+      }
+
+      #application {
+        padding: 2.5rem 1.25rem;
+      }
+
+      .app-params {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .problem-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .problem-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .expertise-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .transfer-domains {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 0.6rem;
+        text-align: center;
+      }
+    }
+
+    @media(max-width:61.938rem) {
+      .sticky-cta-bar::before {
+        display: none;
+      }
+
+      .sticky-cta-inner {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        gap: 0.5rem;
+        height: auto;
+      }
+
+      .sticky-cta-bar {
+        height: auto;
+        position: relative;
+      }
+
+      body {
+        padding-bottom: 0;
+      }
+    }
+
+    /* ===================== BINARIS FOOTER ===================== */
+
+    footer#footer {
+      position: relative;
+      overflow: hidden;
+      /* background: linear-gradient(135deg,
+          #07111f 0%,
+          #081725 58%,
+          #06101d 100%); */
+      padding: 4.5rem 2rem 1.8rem;
+      color: rgba(255, 255, 255, 0.68);
+      font-family: 'Inter', Arial, sans-serif;
+    }
+
+    footer#footer *,
+    footer#footer *::before,
+    footer#footer *::after {
+      box-sizing: border-box;
+    }
+
+    footer#footer a {
+      text-decoration: none;
+    }
+
+    footer#footer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px),
+        linear-gradient(90deg,
+          rgba(255, 255, 255, 0.018) 1px,
+          transparent 1px);
+      background-size: 34px 34px;
+      -webkit-mask-image: linear-gradient(to right, #000, transparent 70%);
+      mask-image: linear-gradient(to right, #000, transparent 70%);
+      pointer-events: none;
+    }
+
+    footer#footer .footer-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    footer#footer .footer-top {
+      display: grid;
+      grid-template-columns:
+        minmax(340px, 1.65fr) minmax(220px, 1fr) minmax(150px, 0.7fr);
+      gap: clamp(2.5rem, 6vw, 6rem);
+      padding-bottom: 3.2rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+    }
+
+    /* Brand */
+
+    footer#footer .footer-brand-logo {
+      height: 60px;
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    footer#footer .footer-brand-logo img {
+      display: block;
+      object-fit: contain;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-mark {
+      width: 57px;
+      height: 57px;
+    }
+
+    footer#footer .footer-brand-logo .footer-logo-wordmark {
+      width: 135px;
+      height: auto;
+      max-height: 38px;
+    }
+
+    footer#footer .footer-brand>p {
+      max-width: 410px;
+      margin: 0 0 1.25rem;
+      color: rgba(255, 255, 255, 0.66);
+      font-size: 0.88rem;
+      line-height: 1.75;
+    }
+
+    /* Contact information */
+
+    footer#footer .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    footer#footer .footer-contact-item svg {
+      width: 15px;
+      height: 15px;
+      flex: 0 0 15px;
+      fill: none;
+      stroke: #00b4d8;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    footer#footer .footer-contact-item a {
+      color: inherit;
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-contact-item a:hover {
+      color: #00d8cd;
+    }
+
+    /* Footer columns */
+
+    footer#footer .footer-col h4 {
+      margin: 0 0 1.25rem;
+      color: #fff;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    footer#footer .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    footer#footer .footer-links li a {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.45rem 0;
+      border-bottom: 1px solid transparent;
+      color: rgba(255, 255, 255, 0.62);
+      font-size: 0.84rem;
+      line-height: 1.45;
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a::after {
+      content: "›";
+      flex-shrink: 0;
+      color: #00b4d8;
+      font-size: 1.05rem;
+      line-height: 1;
+      opacity: 0.85;
+      transform: translateX(0);
+      transition:
+        transform 0.2s ease,
+        color 0.2s ease;
+    }
+
+    footer#footer .footer-links li a:hover {
+      color: #fff;
+      border-bottom-color: rgba(0, 216, 205, 0.25);
+    }
+
+    footer#footer .footer-links li a:hover::after {
+      color: #00d8cd;
+      transform: translateX(4px);
+    }
+
+    /* Bottom bar */
+
+    footer#footer .footer-bottom {
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      color: rgba(255, 255, 255, 0.44);
+      font-size: 0.72rem;
+    }
+
+    footer#footer .footer-legal {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    footer#footer .footer-legal a {
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 0.2s ease;
+    }
+
+    footer#footer .footer-legal a:hover {
+      color: #00d8cd;
+    }
+
+    footer#footer .footer-legal-sep {
+      width: 1px;
+      height: 13px;
+      background: rgba(255, 255, 255, 0.22);
+    }
+
+    /* Tablet */
+
+    @media (max-width: 900px) {
+      footer#footer .footer-top {
+        grid-template-columns: 1.25fr 1fr;
+        gap: 2.5rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: 1 / -1;
+      }
+    }
+
+    /* Mobile */
+
+    @media (max-width: 600px) {
+      footer#footer {
+        padding: 3.5rem 1.25rem 1.5rem;
+      }
+
+      footer#footer .footer-top {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      footer#footer .footer-brand {
+        grid-column: auto;
+      }
+
+      footer#footer .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      footer#footer .footer-legal {
+        flex-wrap: wrap;
+      }
+    }
+
+    .pub-disclaimer {
+      background: #f0f4f9;
+      border-radius: 10px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .pub-disclaimer-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid #9ca3af;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      color: #6b7280;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .pub-disclaimer p {
+      font-size: 0.82rem;
+      color: #6b7280;
+      line-height: 1.65;
+    }
+
+    .challenges-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #155877;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      line-height: 1;
+      padding: 0.48rem 1.15rem;
+      margin-bottom: 1rem;
+      border: 1px solid #0d3448;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="pic/Binaris-Logo-22.png" width="75" height="75" alt="BINARIS">
+        <div class="nav-Logo">
+          <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" alt="BINARIS AI & Engineering"></div>
+          <div> - AI & ENGINEERING -</div>
+        </div>
+
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html#hero">Home</a></li>
+        <li><a href="index.html#Services">Services</a></li>
+        <li><a href="index.html#industries">Industries</a></li>
+        <li><a href="index.html#case-studies">Case studies</a></li>
+        <li><a href="index.html#WhyBINARIS">Why BINARIS</a></li>
+        <li><a href="About.html">About Us</a></li>
+        <li><a href="#" class="nav-cta-btn" onclick="openModal(event)">Contact Us</a></li>
+      </ul>
+      <div class="nav-hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+    </div>
+  </nav>
+
+  <!-- STORY 1 · HERO -->
+  <section id="case-hero" data-story-stage="hero">
+    <div class="case-hero-inner reveal">
+      <div class="hero-text-col">
+
+        <div class="founder-tag">Founder's Previous Research</div>
+        <h1>AI-Guided Multivariable<br>Optimisation</h1>
+        <p class="sub">From limited data and interacting variables to validated operating conditions</p>
+        <p class="lead">Research conducted by BINARIS's founder before BINARIS was established.</p>
+      </div>
+
+      <div class="hero-image-col">
+        <img src="pic/case-study/AI-Guided-Multivariable-Optimisation.png"
+          alt="Illustrative multivariable optimisation landscape">
+        <p class="hero-image-caption">Illustrative multivariable optimisation landscape.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 2 · CHALLENGES -->
+  <section id="problem" data-story-stage="challenge">
+    <div class="problem-inner reveal">
+
+      <div class="problem-text">
+        <div class="challenges-label">Challenges</div>
+        <h2>When Every Trial Is Expensive</h2>
+        <p>Complex processes involve interacting variables, limited data and costly experiments — making it difficult to
+          find the right conditions through traditional trial-and-error approaches.</p>
+      </div>
+      <div class="problem-cards">
+        <div class="problem-card">
+          <div class="problem-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="14" cy="13" r="6" />
+              <circle cx="48" cy="10" r="6" />
+              <circle cx="32" cy="31" r="6" />
+              <circle cx="15" cy="50" r="6" />
+              <circle cx="49" cy="52" r="6" />
+              <path d="M20 14l22-3M18 18l10 9M44 15l-8 11M28 36l-9 10M36 36l9 11" />
+            </svg>
+          </div>
+          <div>
+            <h4>Interacting Variables</h4>
+            <p>Variables influence each other in complex ways.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="32" cy="30" r="25" />
+              <path d="M38 19c-2-2-5-3-8-3-5 0-9 3-9 7 0 11 21 5 21 16 0 5-4 8-10 8-4 0-8-1-11-4M32 11v38" />
+            </svg>
+          </div>
+          <div>
+            <h4>Costly Testing</h4>
+            <p>Each experiment consumes time and resources.</p>
+          </div>
+        </div>
+        <div class="problem-card">
+          <div class="problem-card-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M8 54h49M14 49V34h10v15M29 49V23h10v26M44 49V10h10v39" />
+            </svg>
+          </div>
+          <div>
+            <h4>Limited Data</h4>
+            <p>Small datasets make exhaustive search impractical.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 3 · SOLUTION / APPROACH -->
+  <section id="application" data-story-stage="solution">
+    <div class="app-inner reveal">
+      <div class="app-text">
+        <h2>Demonstrated Application:<br>Biosensor Process Optimisation</h2>
+        <p>Machine learning and Bayesian optimisation were used to model an experimental biosensor process and identify
+          promising operating conditions.</p>
+        <div class="app-params">
+          <span class="app-param"><span class="app-param-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 4a3 3 0 016 0v9.2a5 5 0 11-6 0V4z" />
+                <path d="M12 8v8" />
+                <circle cx="12" cy="17" r="1.8" />
+              </svg>
+            </span>Material Ratio</span>
+          <span class="app-param"><span class="app-param-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v6h5" />
+              </svg>
+            </span>Time</span>
+          <span class="app-param"><span class="app-param-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 4a3 3 0 016 0v9.2a5 5 0 11-6 0V4z" />
+                <path d="M12 8v8" />
+                <circle cx="12" cy="17" r="1.8" />
+              </svg>
+            </span>Temperature</span>
+          <span class="app-param"><span class="app-param-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2C9 7 5 11 5 15a7 7 0 0014 0c0-4-4-8-7-13z" />
+                <circle cx="12" cy="15" r="2" />
+              </svg>
+            </span>pH</span>
+        </div>
+      </div>
+      <div class="app-image">
+        <img src="pic/case-study/case-manufacturing-vision/body image-bg-io.png" />
+        <!-- <div class="app-image-placeholder">
+         
+        </div> -->
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 3B · HOW THE SOLUTION WORKS -->
+  <section id="pipeline" data-story-stage="solution-detail">
+    <div class="pipeline-inner reveal">
+      <h2>From Experimental Data to Validated Conditions</h2>
+      <div class="pipeline-steps">
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">1</div>
+          <div class="pipeline-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 9h24M23 9v35c0 7 4 11 9 11s9-4 9-11V9M23 34h18" />
+              <circle cx="29" cy="41" r="1.4" fill="currentColor" stroke="none" />
+              <circle cx="35" cy="46" r="1.4" fill="currentColor" stroke="none" />
+              <circle cx="30" cy="50" r="1.4" fill="currentColor" stroke="none" />
+            </svg>
+          </div>
+          <h4>Experimental Data</h4>
+          <p>Collect data from designed experiments.</p>
+        </div>
+        <div class="pipeline-arrow">
+          <svg viewBox="0 0 16 16">
+            <polyline points="4 8 12 8" />
+            <polyline points="8 4 12 8 8 12" />
+          </svg>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">2</div>
+          <div class="pipeline-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="32" cy="10" r="5" />
+              <circle cx="13" cy="25" r="5" />
+              <circle cx="51" cy="25" r="5" />
+              <circle cx="19" cy="47" r="5" />
+              <circle cx="45" cy="47" r="5" />
+              <circle cx="32" cy="33" r="5" />
+              <path
+                d="M29 14l-12 8M35 14l12 8M18 28l10 3M46 28l-9 3M29 37l-7 6M35 37l7 6M18 30l1 12M46 30l-1 12M24 47h16" />
+            </svg>
+          </div>
+          <h4>ML Process Model</h4>
+          <p>Learn patterns and interactions.</p>
+        </div>
+        <div class="pipeline-arrow">
+          <svg viewBox="0 0 16 16">
+            <polyline points="4 8 12 8" />
+            <polyline points="8 4 12 8 8 12" />
+          </svg>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">3</div>
+          <div class="pipeline-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 54V9M9 51l3 3 3-3M18 48c8-1 8-28 18-28s8 19 17 4" />
+              <circle cx="19" cy="47" r="2.3" fill="currentColor" stroke="none" />
+              <circle cx="36" cy="20" r="2.3" fill="currentColor" stroke="none" />
+              <circle cx="53" cy="24" r="2.3" fill="currentColor" stroke="none" />
+            </svg>
+          </div>
+          <h4>Bayesian Optimisation</h4>
+          <p>Explore intelligently to find promising conditions.</p>
+        </div>
+        <div class="pipeline-arrow">
+          <svg viewBox="0 0 16 16">
+            <polyline points="4 8 12 8" />
+            <polyline points="8 4 12 8 8 12" />
+          </svg>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">4</div>
+          <div class="pipeline-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="29" cy="34" r="22" />
+              <circle cx="29" cy="34" r="14" />
+              <circle cx="29" cy="34" r="6" />
+              <path d="M29 34l22-22M45 11l7-3-2 8 7 2-8 7-7-2-2-7z" />
+            </svg>
+          </div>
+          <h4>Recommended Conditions</h4>
+          <p>Suggest optimal or near-optimal settings.</p>
+        </div>
+        <div class="pipeline-arrow">
+          <svg viewBox="0 0 16 16">
+            <polyline points="4 8 12 8" />
+            <polyline points="8 4 12 8 8 12" />
+          </svg>
+        </div>
+        <div class="pipeline-step">
+          <div class="pipeline-step-num">5</div>
+          <div class="pipeline-step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M25 8h14M28 8v14L14 50c-2 4 1 7 6 7h24c5 0 8-3 6-7L36 22V8M21 42h22" />
+              <circle cx="29" cy="48" r="1.5" fill="currentColor" stroke="none" />
+              <circle cx="36" cy="44" r="1.5" fill="currentColor" stroke="none" />
+            </svg>
+            <span class="validation-check">✓</span>
+          </div>
+          <h4>Laboratory Validation</h4>
+          <p>Test recommendations in the laboratory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 4 · KEY RESULT -->
+  <section id="key-metric" data-story-stage="result">
+    <div class="metric-inner reveal">
+      <div class="metric-badge">✓</div>
+      <div class="metric-content">
+        <h2><span class="highlight">≈5%</span> Validated Improvement</h2>
+        <p>In one evaluated biosensor optimisation task, compared with the best condition in the original experimental
+          dataset.</p>
+        <div class="metric-validated">AI-recommended conditions validated in laboratory experiments.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 6 · EXPERTISE -->
+  <section id="expertise" data-story-stage="expertise">
+    <div class="expertise-inner reveal">
+      <h2>What This Expertise Brings to Your Optimisation Challenge</h2>
+      <div class="expertise-grid">
+        <div class="expertise-card">
+          <div class="expertise-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="15" cy="18" r="5" />
+              <circle cx="34" cy="9" r="5" />
+              <circle cx="49" cy="25" r="5" />
+              <circle cx="18" cy="45" r="5" />
+              <circle cx="43" cy="50" r="5" />
+              <path d="M20 16l9-5M38 13l8 8M45 28L22 42M18 23v17M23 47l15 2" />
+            </svg></div>
+          <h4>Model Interactions</h4>
+          <p>Reveal relationships between variables.</p>
+        </div>
+        <div class="expertise-card">
+          <div class="expertise-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="29" cy="29" r="22" />
+              <path
+                d="M35 19c-2-2-4-3-7-3-5 0-8 3-8 7 0 10 18 5 18 14 0 5-4 8-9 8-4 0-7-1-10-4M29 12v35M48 34v18m0 0l-6-6m6 6l6-6" />
+            </svg></div>
+          <h4>Reduce Costly Trials</h4>
+          <p>Focus testing on promising settings.</p>
+        </div>
+        <div class="expertise-card">
+          <div class="expertise-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="29" cy="34" r="22" />
+              <circle cx="29" cy="34" r="14" />
+              <circle cx="29" cy="34" r="6" />
+              <path d="M29 34l22-22M45 11l7-3-2 8 7 2-8 7-7-2-2-7z" />
+            </svg></div>
+          <h4>Optimise Practical Objectives</h4>
+          <p>Target quality, yield, cost, energy, accuracy or time.</p>
+        </div>
+        <div class="expertise-card">
+          <div class="expertise-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M32 7c8 7 16 8 22 9v15c0 13-8 22-22 28C18 53 10 44 10 31V16c6-1 14-2 22-9z" />
+              <path d="M22 32l7 7 14-16" />
+            </svg></div>
+          <h4>Validate Recommendations</h4>
+          <p>Confirm settings through experiments, simulations, pilot trials or operational testing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 6B · TRANSFERABLE APPLICATIONS -->
+  <section id="transferable" data-story-stage="applications">
+    <div class="transfer-inner reveal">
+      <div class="transfer-text">
+        <h2>Transferable Across Complex Systems</h2>
+        <p>Applicable to manufacturing, engineering design, materials and formulations, energy systems, operations,
+          sensor development and experimental R&D.</p>
+      </div>
+      <div>
+        <div class="transfer-domains">
+          <div class="transfer-domain">
+            <div class="transfer-domain-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 55h47V30L43 39V28L30 38V19h-9l-4 36M22 19l2-10h5l1 10M27 47h6M40 47h6M51 47h5" />
+              </svg></div>
+            <h4>Manufacturing</h4>
+          </div>
+          <div class="transfer-domain">
+            <div class="transfer-domain-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="32" cy="9" r="4" />
+                <circle cx="17" cy="25" r="4" />
+                <circle cx="47" cy="25" r="4" />
+                <circle cx="10" cy="44" r="4" />
+                <circle cx="27" cy="49" r="4" />
+                <circle cx="51" cy="47" r="4" />
+                <path d="M29 12L20 22M35 12l9 10M16 29l-5 11M20 28l5 17M44 28L30 46M48 29l2 14M14 44l9 4M31 49h16" />
+              </svg></div>
+            <h4>Materials &amp; Formulations</h4>
+          </div>
+          <div class="transfer-domain">
+            <div class="transfer-domain-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M23 52l7-36 5 36M17 52h24M14 28l16-12M30 16l16 12M30 16V4M10 55h45M39 36h18l-3 16H36zM38 41h18M43 36l-2 16M50 36l-1 16" />
+              </svg></div>
+            <h4>Energy Systems</h4>
+          </div>
+          <div class="transfer-domain">
+            <div class="transfer-domain-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="32" cy="29" r="10" />
+                <path
+                  d="M27 7h10l2 7 6 3 7-2 5 9-5 5v7l5 5-5 9-7-2-6 3-2 7H27l-2-7-6-3-7 2-5-9 5-5v-7l-5-5 5-9 7 2 6-3zM20 59c7-6 17-6 24 0" />
+              </svg></div>
+            <h4>Operations</h4>
+          </div>
+          <div class="transfer-domain">
+            <div class="transfer-domain-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="22" y="15" width="20" height="35" rx="10" />
+                <path d="M27 20h10M27 45h10M32 50v8M25 58h14M20 8c7-6 17-6 24 0M24 12c5-4 11-4 16 0" />
+              </svg></div>
+            <h4>Sensor Development</h4>
+          </div>
+          <div class="transfer-domain">
+            <div class="transfer-domain-icon" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" stroke-width="1.7"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M38 7l10 5-4 8-10-5zM37 17L24 40M17 46h29M11 55h43M22 40c8 0 14 5 14 15M20 32l8 5M43 21l4 7" />
+              </svg></div>
+            <h4>Experimental R&amp;D</h4>
+          </div>
+        </div>
+      </div>
+      <div class="tech-bar-wrap">
+        <div class="tech-bar-label">
+          <svg viewBox="0 0 16 16">
+            <rect x="1" y="3" width="14" height="10" rx="2" />
+            <path d="M5 7l2 2 4-4" />
+          </svg>
+          Technology Used
+        </div>
+        <span class="tech-name">Python</span>
+        <div class="tech-dot"></div>
+        <span class="tech-name">scikit-learn</span>
+        <div class="tech-dot"></div>
+        <span class="tech-name">XGBoost</span>
+        <div class="tech-dot"></div>
+        <span class="tech-name">Optuna</span>
+        <div class="tech-dot"></div>
+        <span class="tech-name">Bayesian Optimisation</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY 7 · SUPPORTING EVIDENCE / RESEARCH -->
+  <section id="research" data-story-stage="evidence">
+    <div class="research-inner reveal">
+      <h2>Supporting Research</h2>
+      <div class="research-card">
+        <div class="research-doc-icon" aria-hidden="true">
+          <svg viewBox="0 0 80 96" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 4h36l16 17v69H14z" />
+            <path d="M50 4v18h16M25 29h25M25 40h30M25 51h30M25 62h30M25 73h24" />
+          </svg>
+        </div>
+        <div class="research-content">
+          <h3>Research manuscript under review</h3>
+          <div class="research-status">Manuscript under review</div>
+          <div class="research-tags">
+            <span class="research-tag">7 ML approaches</span>
+            <span class="research-tag">2 optimisation tasks</span>
+            <span class="research-tag">Bayesian optimisation</span>
+            <span class="research-tag">Experimental validation</span>
+          </div>
+          <span class="research-pub-link">
+            <svg aria-hidden="true" viewBox="0 0 18 18" width="15" height="15" fill="none" stroke="currentColor"
+              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="8" width="12" height="8" rx="2" />
+              <path d="M6 8V5a3 3 0 016 0v3" />
+            </svg>
+            Publication link available after publication
+          </span>
+        </div>
+
+        <div class="research-disclaimer"></div>
+      </div>
+
+      <div class="pub-disclaimer">
+        <div class="pub-disclaimer-icon">i</div>
+        <p>This work is presented as evidence of the founder's relevant technical
+          experience, not as a BINARIS client project.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- STORY 8 · CTA -->
+  <section id="page-cta" data-story-stage="cta">
+    <div class="cta-inner reveal">
+      <div class="cta-left">
+        <h2>Turn Complex Variables into Better Decisions</h2>
+        <p>Use data-driven modelling and intelligent optimisation to identify better settings with fewer costly trials.
+        </p>
+      </div>
+      <a href="#" class="cta-btn" onclick="openModal(event)">Discuss Your Optimisation Challenge</a>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="footer-inner">
+
+      <div class="footer-top">
+
+        <!-- Brand and contact information -->
+        <div class="footer-brand">
+
+          <a href="index.html" class="footer-brand-logo" aria-label="BINARIS home">
+            <img class="footer-logo-mark" src="pic/Binaris-Logo-22.png" alt="" aria-hidden="true">
+            <div class="nav-Logo">
+              <div><img src="pic/Binaris-Logo-33.png" width="200" height="45" alt="BINARIS AI & Engineering"></div>
+              <div> - AI & ENGINEERING -</div>
+            </div>
+
+          </a>
+
+          <p>
+            AI, computer vision and engineering software for complex
+            scientific, industrial and business challenges.
+          </p>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <rect x="1" y="3" width="14" height="10" rx="1"></rect>
+              <polyline points="1 4 8 9 15 4"></polyline>
+            </svg>
+
+            <a href="mailto:info@binaris.com.au">
+              info@binaris.com.au
+            </a>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <path d="M8 1C5.2 1 3 3.2 3 6c0 4 5 9 5 9s5-5 5-9c0-2.8-2.2-5-5-5z"></path>
+              <circle cx="8" cy="6" r="1.5"></circle>
+            </svg>
+
+            <span>Melbourne, Australia</span>
+          </div>
+
+          <div class="footer-contact-item">
+            <svg viewBox="0 0 16 16" aria-hidden="true">
+              <circle cx="8" cy="8" r="6.5"></circle>
+              <path d="M1.5 8h13"></path>
+              <path d="M8 1.5c2 2 3 4.1 3 6.5s-1 4.5-3 6.5"></path>
+              <path d="M8 1.5C6 3.5 5 5.6 5 8s1 4.5 3 6.5"></path>
+            </svg>
+
+            <span>Working with clients across Australia and beyond.</span>
+          </div>
+
+        </div>
+
+        <!-- Capabilities -->
+        <div class="footer-col">
+          <h4>Capabilities</h4>
+
+          <ul class="footer-links">
+            <li>
+              <a href="ai-machine-learning.html">
+                AI &amp; Machine Learning
+              </a>
+            </li>
+
+            <li>
+              <a href="ai-agents-automation.html">
+                AI Agents &amp; Automation
+              </a>
+            </li>
+
+            <li>
+              <a href="computer-vision.html">
+                Computer Vision &amp; Imaging
+              </a>
+            </li>
+
+            <li>
+              <a href="engineering-software.html">
+                Scientific &amp; Engineering Software
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div class="footer-col">
+          <h4>Company</h4>
+
+          <ul class="footer-links">
+            <li>
+              <a href="About.html">About Us</a>
+            </li>
+
+            <li>
+              <a href="#" onclick="openModal(event)">Contact</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Footer bottom -->
+      <div class="footer-bottom">
+        <span>© 2026 BINARIS. All rights reserved.</span>
+
+        <div class="footer-legal">
+          <!-- <a href="privacy-policy.html">Privacy Policy</a> -->
+
+          <!-- <span class="footer-legal-sep" aria-hidden="true"></span> -->
+
+          <!-- <a href="terms-of-use.html">Terms of Use</a> -->
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <div class="sticky-cta-bar">
+    <div class="sticky-cta-inner">
+      <span class="sticky-cta-text">Ready to optimise your process with AI?</span>
+      <button class="sticky-cta-btn" onclick="openModal(event)">Book a Consultation</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event)">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3>Let's Talk About Your Project</h3>
+      <p>Tell us what you're working on and our team will get back to you within one business day.</p>
+      <div class="modal-field"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
+      <div class="modal-field"><label>Email Address</label><input type="email" placeholder="jane@company.com"></div>
+      <div class="modal-field"><label>How Can We Help?</label><textarea
+          placeholder="Describe your project or question…"></textarea></div>
+      <button class="modal-submit" onclick="closeModal()">Send Message →</button>
+    </div>
+  </div>
+
+  <script>
+    function toggleNav() { document.getElementById('mainNav').classList.toggle('mobile-open'); }
+    function openModal(e) { if (e) e.preventDefault(); document.getElementById('contactModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { document.getElementById('contactModal').classList.remove('open'); document.body.style.overflow = ''; }
+    function closeModalOnOverlay(e) { if (e.target === document.getElementById('contactModal')) closeModal(); }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+  <script src="contact-form.js"></script>
+</body>
+
+</html>
+
+
