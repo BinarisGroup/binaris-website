@@ -1231,13 +1231,15 @@
 
     .modal {
       background: #fff;
-      max-width: 480px;
+      max-width: 560px;
       width: 90%;
       padding: 2.5rem;
       position: relative;
       border-top: 4px solid var(--primary);
       transform: translateY(20px);
       transition: transform 0.3s;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
     }
 
     .modal-overlay.open .modal {
@@ -1295,6 +1297,7 @@
     .modal-field input:focus,
     .modal-field textarea:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 85, 158, 0.1);
     }
 
     .modal-field textarea {
@@ -1317,6 +1320,33 @@
 
     .modal-submit:hover {
       background: var(--primary-dark);
+    }
+
+    .modal-submit:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    .form-status {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+    }
+
+    .form-status.success {
+      display: block;
+      color: #17653a;
+      background: #e9f8ef;
+      border: 1px solid #b9e6c9;
+    }
+
+    .form-status.error {
+      display: block;
+      color: #8a2430;
+      background: #fff0f1;
+      border: 1px solid #f1c2c7;
     }
 
 
@@ -1623,7 +1653,7 @@
         <li><a href="index.html#case-studies">Case studies</a></li>
         <li><a href="index.html#WhyBINARIS">Why BINARIS</a></li>
         <li><a href="About.html">About Us</a></li>
-        <li><a href="#" class="nav-cta-btn" onclick="openModal(event)">Contact Us</a></li>
+        <li><a href="#contact" class="nav-cta-btn" data-modal="contact">Contact Us</a></li>
       </ul>
       <div class="nav-hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
@@ -1888,7 +1918,7 @@
         <div class="metric-number-col">
           <img src="pic/case-study/case-healthcare-imaging/Turn Complex Imaging.png" />
           <h2>Turn Complex Imaging Data<br>into Practical AI Solutions</h2>
-          <a href="#" class="cta-btn" onclick="openModal(event)">
+          <a href="#talk-to-our-team" class="cta-btn" data-modal="team">
             Discuss Your Imaging Challenge
             <svg viewBox="0 0 16 16">
               <polyline points="4 8 12 8" />
@@ -1997,7 +2027,7 @@
             </li>
 
             <li>
-              <a href="#" onclick="openModal(event)">Contact</a>
+              <a href="#contact" data-modal="contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -2021,37 +2051,118 @@
   <div class="sticky-cta-bar">
     <div class="sticky-cta-inner">
       <span class="sticky-cta-text">Working on an imaging challenge? We can help.</span>
-      <button class="sticky-cta-btn" onclick="openModal(event)">Discuss Your Project</button>
+      <button class="sticky-cta-btn" type="button" data-modal="team">Discuss Your Project</button>
     </div>
   </div>
 
-  <div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event)">
+  <div class="modal-overlay" id="teamModal" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle" hidden>
     <div class="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <h3>Let's Talk About Your Project</h3>
-      <p>Tell us what you're working on and our team will get back to you within one business day.</p>
-      <div class="modal-field"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
-      <div class="modal-field"><label>Email Address</label><input type="email" placeholder="jane@company.com"></div>
-      <div class="modal-field"><label>How Can We Help?</label><textarea
-          placeholder="Describe your project or question…"></textarea></div>
-      <button class="modal-submit" onclick="closeModal()">Send Message →</button>
+      <button class="modal-close" type="button" data-close-modal aria-label="Close form">✕</button>
+      <h3 id="teamModalTitle">Talk to Our Team</h3>
+      <p>Have a project in mind or exploring how AI can help your business? Tell us a little about your needs and our
+        team will get in touch.</p>
+      <form class="contact-form" action="https://formsubmit.co/ajax/info@binaris.com.au" method="POST">
+        <input type="hidden" name="_subject" value="New Talk to Our Team enquiry — Healthcare Imaging case study">
+        <input type="hidden" name="Form Type" value="Talk to Our Team">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <div class="modal-field"><label for="team-name">Full Name</label><input id="team-name" name="Full Name"
+            type="text" autocomplete="name" required></div>
+        <div class="modal-field"><label for="team-email">Work Email</label><input id="team-email" name="Work Email"
+            type="email" autocomplete="email" required></div>
+        <div class="modal-field"><label for="team-company">Company</label><input id="team-company" name="Company"
+            type="text" autocomplete="organization" required></div>
+        <div class="modal-field"><label for="team-title">Job Title</label><input id="team-title" name="Job Title"
+            type="text" autocomplete="organization-title" required></div>
+        <div class="modal-field"><label for="team-project">Tell us about your project</label><textarea id="team-project"
+            name="Project Details" required></textarea></div>
+        <button class="modal-submit" type="submit">Talk to Our Team →</button>
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle"
+    hidden>
+    <div class="modal">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close form">✕</button>
+      <h3 id="contactModalTitle">Contact Us</h3>
+      <p>Have a question or need more information? Send us a message and we'll get back to you shortly.</p>
+      <form class="contact-form" action="https://formsubmit.co/ajax/info@binaris.com.au" method="POST">
+        <input type="hidden" name="_subject" value="New Contact Us message — Healthcare Imaging case study">
+        <input type="hidden" name="Form Type" value="Contact Us">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <div class="modal-field"><label for="contact-name">Full Name</label><input id="contact-name" name="Full Name"
+            type="text" autocomplete="name" required></div>
+        <div class="modal-field"><label for="contact-email">Email Address</label><input id="contact-email"
+            name="Email Address" type="email" autocomplete="email" required></div>
+        <div class="modal-field"><label for="contact-subject">Subject</label><input id="contact-subject" name="Subject"
+            type="text" required></div>
+        <div class="modal-field"><label for="contact-message">Message</label><textarea id="contact-message"
+            name="Message" required></textarea></div>
+        <button class="modal-submit" type="submit">Send Message →</button>
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
     </div>
   </div>
 
   <script>
     function toggleNav() { document.getElementById('mainNav').classList.toggle('mobile-open'); }
-    function openModal(e) { if (e) e.preventDefault(); document.getElementById('contactModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function closeModal() { document.getElementById('contactModal').classList.remove('open'); document.body.style.overflow = ''; }
-    function closeModalOnOverlay(e) { if (e.target === document.getElementById('contactModal')) closeModal(); }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    const modals = { team: document.getElementById('teamModal'), contact: document.getElementById('contactModal') };
+    let activeModal = null;
+    function openModal(type) {
+      const modal = modals[type];
+      if (!modal) return;
+      activeModal = modal;
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      const firstInput = modal.querySelector('input:not([type="hidden"]):not([style*="display:none"])');
+      if (firstInput) setTimeout(() => firstInput.focus(), 100);
+    }
+    function closeModal() {
+      if (!activeModal) return;
+      const modal = activeModal;
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      activeModal = null;
+      setTimeout(() => { modal.hidden = true; }, 300);
+    }
+    document.querySelectorAll('[data-modal]').forEach(trigger => trigger.addEventListener('click', event => { event.preventDefault(); openModal(trigger.dataset.modal); }));
+    document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', closeModal));
+    Object.values(modals).forEach(modal => modal.addEventListener('click', event => { if (event.target === modal) closeModal(); }));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
+    document.querySelectorAll('.contact-form').forEach(form => {
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        const button = form.querySelector('.modal-submit');
+        const status = form.querySelector('.form-status');
+        const originalLabel = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Sending…';
+        status.className = 'form-status';
+        status.textContent = '';
+        try {
+          const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+          if (!response.ok) throw new Error('Submission failed');
+          form.reset();
+          status.textContent = 'Thank you. Your message has been sent successfully.';
+          status.className = 'form-status success';
+        } catch (error) {
+          status.textContent = 'We could not send your message. Please try again or email info@binaris.com.au.';
+          status.className = 'form-status error';
+        } finally {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      });
+    });
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
-  <script src="contact-form.js"></script>
+  <script src="contact-form-handler.js"></script>
 </body>
 
 </html>
-
-

@@ -1241,13 +1241,15 @@
 
     .modal {
       background: #fff;
-      max-width: 480px;
+      max-width: 560px;
       width: 90%;
       padding: 2.5rem;
       position: relative;
       border-top: 4px solid var(--primary);
       transform: translateY(20px);
       transition: transform 0.3s;
+      max-height: calc(100vh - 2rem);
+      overflow-y: auto;
     }
 
     .modal-overlay.open .modal {
@@ -1305,6 +1307,7 @@
     .modal-field input:focus,
     .modal-field textarea:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(0, 85, 158, 0.1);
     }
 
     .modal-field textarea {
@@ -1327,6 +1330,33 @@
 
     .modal-submit:hover {
       background: var(--primary-dark);
+    }
+
+    .modal-submit:disabled {
+      opacity: 0.65;
+      cursor: wait;
+    }
+
+    .form-status {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.75rem 0.9rem;
+      border-radius: 4px;
+      font-size: 0.88rem;
+    }
+
+    .form-status.success {
+      display: block;
+      color: #17653a;
+      background: #e9f8ef;
+      border: 1px solid #b9e6c9;
+    }
+
+    .form-status.error {
+      display: block;
+      color: #8a2430;
+      background: #fff0f1;
+      border: 1px solid #f1c2c7;
     }
 
     /* 2026 visual refresh — aligned with the Manufacturing Vision case-study system */
@@ -1923,6 +1953,219 @@
       background-color: #e6e7e9;
       padding: 1rem 2rem 1.5rem;
     }
+
+    .sccw-section,
+    .sccw-section * {
+      box-sizing: border-box;
+    }
+
+    .sccw-section {
+      --sccw-navy: #08245f;
+      --sccw-blue: #079aca;
+      --sccw-teal: #08a2a4;
+      --sccw-line: #cfe7ed;
+      --sccw-soft: #edf8fa;
+      padding: clamp(32px, 8vw, 62px) 24px;
+      overflow: hidden;
+      color: var(--sccw-navy);
+      background: #fff;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    .sccw-container {
+      width: min(100%, 1440px);
+      margin-inline: auto;
+    }
+
+    .sccw-header {
+      margin-bottom: clamp(42px, 5vw, 66px);
+      text-align: center;
+    }
+
+    .sccw-title {
+      margin: 0;
+      font-size: clamp(2.25rem, 4.5vw, 4.25rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .sccw-subtitle {
+      margin: 16px 0 0;
+      color: var(--sccw-blue);
+      font-size: clamp(1.1rem, 2vw, 1.75rem);
+      font-weight: 650;
+    }
+
+    .sccw-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 48px minmax(0, 1fr) 48px minmax(0, 1fr) 48px minmax(0, 1fr);
+      align-items: center;
+    }
+
+    .sccw-card {
+      display: flex;
+      min-height: 158px;
+      padding: 34px 24px 26px;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 1px solid #e1e9ef;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 8px 26px rgba(8, 36, 95, 0.10);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .sccw-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(8, 36, 95, 0.14);
+    }
+
+    .sccw-card h3 {
+      margin: 0;
+      font-size: clamp(1.15rem, 1.6vw, 1.55rem);
+      line-height: 1.25;
+    }
+
+    .sccw-icon {
+      display: grid;
+      width: 158px;
+      height: 158px;
+      margin: 30px auto 22px;
+      place-items: center;
+    }
+
+    .sccw-icon svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .sccw-card p {
+      width: 100%;
+      margin: auto 0 0;
+      padding-top: 22px;
+      border-top: 2px solid var(--sccw-line);
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .sccw-arrow {
+      display: grid;
+      color: var(--sccw-blue);
+      place-items: center;
+    }
+
+    .sccw-arrow svg {
+      width: 38px;
+      height: 38px;
+    }
+
+    .sccw-benefits {
+      display: grid;
+      width: min(100%, 1040px);
+      margin: 54px auto 0;
+      padding: 18px 24px;
+      grid-template-columns: repeat(3, 1fr);
+      border: 2px solid var(--sccw-line);
+      border-radius: 20px;
+    }
+
+    .sccw-benefit {
+      display: flex;
+      min-height: 82px;
+      padding: 6px 28px;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      font-size: clamp(1rem, 1.4vw, 1.25rem);
+      font-weight: 750;
+    }
+
+    .sccw-benefit+.sccw-benefit {
+      border-left: 1px solid #abc9d2;
+    }
+
+    .sccw-benefit-icon {
+      display: grid;
+      width: 68px;
+      height: 68px;
+      flex: 0 0 68px;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--sccw-soft);
+    }
+
+    .sccw-benefit-icon svg {
+      width: 44px;
+      height: 44px;
+    }
+
+    @media (max-width: 1100px) {
+      .sccw-flow {
+        grid-template-columns: 1fr 34px 1fr;
+        gap: 24px 0;
+      }
+
+      .sccw-flow .sccw-card:nth-of-type(3) {
+        grid-column: 1;
+        grid-row: 3;
+      }
+
+      .sccw-flow .sccw-card:nth-of-type(4) {
+        grid-column: 3;
+        grid-row: 3;
+      }
+
+      .sccw-flow .sccw-arrow:nth-of-type(2) {
+        grid-column: 2;
+        grid-row: 3;
+      }
+
+      .sccw-flow .sccw-arrow:nth-of-type(3) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .sccw-section {
+        padding-inline: 18px;
+      }
+
+      .sccw-flow {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .sccw-card {
+        width: 100%;
+        min-height: 350px;
+      }
+
+      .sccw-arrow {
+        transform: rotate(90deg);
+      }
+
+      .sccw-flow .sccw-arrow:nth-of-type(3) {
+        display: grid;
+      }
+
+      .sccw-benefits {
+        grid-template-columns: 1fr;
+        padding: 8px 20px;
+      }
+
+      .sccw-benefit {
+        justify-content: flex-start;
+      }
+
+      .sccw-benefit+.sccw-benefit {
+        border-top: 1px solid #abc9d2;
+        border-left: 0;
+      }
+    }
   </style>
 </head>
 
@@ -1945,7 +2188,7 @@
         <li><a href="index.html#case-studies">Case studies</a></li>
         <li><a href="index.html#WhyBINARIS">Why BINARIS</a></li>
         <li><a href="About.html">About Us</a></li>
-        <li><a href="#" class="nav-cta-btn" onclick="openModal(event)">Contact Us</a></li>
+        <li><a href="#contact" class="nav-cta-btn" data-modal="contact">Contact Us</a></li>
       </ul>
       <div class="nav-hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
@@ -2037,9 +2280,88 @@
       </div>
     </div>
   </section>
-  <section class="solution-workflow" data-story-stage="solution">
+  <!-- <section class="solution-workflow" data-story-stage="solution">
 
     <img src="pic/case-study/case-smart-call-center/Smart Call Center-WorkFlow.png" />
+  </section> -->
+
+  <!-- Smart Call Center Workflow: HTML -->
+  <section class="sccw-section" aria-labelledby="sccw-title">
+    <div class="sccw-container">
+      <header class="sccw-header">
+        <h2 class="sccw-title" id="sccw-title">Smart Call Center Workflow</h2>
+        <p class="sccw-subtitle">AI-powered support from first call to resolution</p>
+      </header>
+
+      <div class="sccw-flow">
+        <article class="sccw-card">
+          <h3>1. Patient Calls</h3>
+          <div class="sccw-icon" aria-hidden="true">
+            <img src="pic/case-study/case-smart-call-center/Patient Calls.png" />
+          </div>
+          <p>Appointments or information</p>
+        </article>
+
+        <div class="sccw-arrow" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none">
+            <path d="M7 24h32M28 13l11 11-11 11" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <article class="sccw-card">
+          <h3>2. AI Responds</h3>
+          <div class="sccw-icon" aria-hidden="true">
+            <img src="pic/case-study/case-smart-call-center/AI Responds.png" />
+          </div>
+          <p>Understands and answers</p>
+        </article>
+
+        <div class="sccw-arrow" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none">
+            <path d="M7 24h32M28 13l11 11-11 11" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <article class="sccw-card">
+          <h3>3. Smart Resolution</h3>
+          <div class="sccw-icon" aria-hidden="true">
+            <img src="pic/case-study/case-smart-call-center/Smart Resolution.png" />
+          </div>
+          <p>AI resolved or staff referred</p>
+        </article>
+
+        <div class="sccw-arrow" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none">
+            <path d="M7 24h32M28 13l11 11-11 11" stroke="currentColor" stroke-width="5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg></div>
+
+        <article class="sccw-card">
+          <h3>4. Insight Recorded</h3>
+          <div class="sccw-icon" aria-hidden="true">
+            <img src="pic/case-study/case-smart-call-center/Insight Recorded.png" />
+          </div>
+          <p>Summary and CRM update</p>
+        </article>
+      </div>
+
+      <div class="sccw-benefits" aria-label="Key benefits">
+        <div class="sccw-benefit"><span class="sccw-benefit-icon" aria-hidden="true"><svg viewBox="0 0 48 48"
+              fill="none">
+              <circle cx="24" cy="24" r="17" stroke="#0B58A2" stroke-width="3" />
+              <path d="M24 13v12l8 5M10 8v8h8" stroke="#0B58A2" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round" />
+              <path d="M11 15a18 18 0 0 1 29 4" stroke="#0B58A2" stroke-width="3" stroke-linecap="round" />
+            </svg></span><span>24/7 Support</span></div>
+        <div class="sccw-benefit"><span class="sccw-benefit-icon" aria-hidden="true"><svg viewBox="0 0 48 48">
+              <path d="M27 3 10 27h13l-3 18 18-26H25l2-16Z" fill="#08A2A4" />
+            </svg></span><span>Faster Response</span></div>
+        <div class="sccw-benefit"><span class="sccw-benefit-icon" aria-hidden="true"><svg viewBox="0 0 48 48"
+              fill="none">
+              <circle cx="18" cy="17" r="7" fill="#08A2A4" />
+              <circle cx="31" cy="18" r="6" fill="#08A2A4" />
+              <path d="M6 39c1-11 5-16 12-16s11 5 12 16M25 39c1-9 3-14 7-14 6 0 9 5 10 14" fill="#08A2A4" stroke="#fff"
+                stroke-width="2" />
+            </svg></span><span>Lower Workload</span></div>
+      </div>
+    </div>
   </section>
 
   <!-- STORY 3 · SOLUTION / APPROACH -->
@@ -2275,7 +2597,7 @@
         <h2>Bring Intelligent Automation<br>to Your Call Center</h2>
 
       </div>
-      <a href="#" class="cta-btn" onclick="openModal(event)"> Discuss Your Call Center Needs</a>
+      <a href="#talk-to-our-team" class="cta-btn" data-modal="team">Discuss Your Call Center Needs</a>
     </div>
   </section>
 
@@ -2375,7 +2697,7 @@
             </li>
 
             <li>
-              <a href="#" onclick="openModal(event)">Contact</a>
+              <a href="#contact" data-modal="contact">Contact</a>
             </li>
           </ul>
         </div>
@@ -2401,37 +2723,118 @@
   <div class="sticky-cta-bar">
     <div class="sticky-cta-inner">
       <span class="sticky-cta-text">Running a high-volume call center? We can help.</span>
-      <button class="sticky-cta-btn" onclick="openModal(event)">Discuss Your Project</button>
+      <button class="sticky-cta-btn" type="button" data-modal="team">Discuss Your Project</button>
     </div>
   </div>
 
-  <div class="modal-overlay" id="contactModal" onclick="closeModalOnOverlay(event)">
+  <div class="modal-overlay" id="teamModal" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle" hidden>
     <div class="modal">
-      <button class="modal-close" onclick="closeModal()">✕</button>
-      <h3>Let's Talk About Your Project</h3>
-      <p>Tell us what you're working on and our team will get back to you within one business day.</p>
-      <div class="modal-field"><label>Full Name</label><input type="text" placeholder="Jane Smith"></div>
-      <div class="modal-field"><label>Email Address</label><input type="email" placeholder="jane@company.com"></div>
-      <div class="modal-field"><label>How Can We Help?</label><textarea
-          placeholder="Describe your project or question…"></textarea></div>
-      <button class="modal-submit" onclick="closeModal()">Send Message →</button>
+      <button class="modal-close" type="button" data-close-modal aria-label="Close form">✕</button>
+      <h3 id="teamModalTitle">Talk to Our Team</h3>
+      <p>Have a project in mind or exploring how AI can help your business? Tell us a little about your needs and our
+        team will get in touch.</p>
+      <form class="contact-form" action="https://formsubmit.co/ajax/info@binaris.com.au" method="POST">
+        <input type="hidden" name="_subject" value="New Talk to Our Team enquiry — Smart Call Center case study">
+        <input type="hidden" name="Form Type" value="Talk to Our Team">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <div class="modal-field"><label for="team-name">Full Name</label><input id="team-name" name="Full Name"
+            type="text" autocomplete="name" required></div>
+        <div class="modal-field"><label for="team-email">Work Email</label><input id="team-email" name="Work Email"
+            type="email" autocomplete="email" required></div>
+        <div class="modal-field"><label for="team-company">Company</label><input id="team-company" name="Company"
+            type="text" autocomplete="organization" required></div>
+        <div class="modal-field"><label for="team-title">Job Title</label><input id="team-title" name="Job Title"
+            type="text" autocomplete="organization-title" required></div>
+        <div class="modal-field"><label for="team-project">Tell us about your project</label><textarea id="team-project"
+            name="Project Details" required></textarea></div>
+        <button class="modal-submit" type="submit">Talk to Our Team →</button>
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="contactModal" role="dialog" aria-modal="true" aria-labelledby="contactModalTitle"
+    hidden>
+    <div class="modal">
+      <button class="modal-close" type="button" data-close-modal aria-label="Close form">✕</button>
+      <h3 id="contactModalTitle">Contact Us</h3>
+      <p>Have a question or need more information? Send us a message and we'll get back to you shortly.</p>
+      <form class="contact-form" action="https://formsubmit.co/ajax/info@binaris.com.au" method="POST">
+        <input type="hidden" name="_subject" value="New Contact Us message — Smart Call Center case study">
+        <input type="hidden" name="Form Type" value="Contact Us">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="display:none">
+        <div class="modal-field"><label for="contact-name">Full Name</label><input id="contact-name" name="Full Name"
+            type="text" autocomplete="name" required></div>
+        <div class="modal-field"><label for="contact-email">Email Address</label><input id="contact-email"
+            name="Email Address" type="email" autocomplete="email" required></div>
+        <div class="modal-field"><label for="contact-subject">Subject</label><input id="contact-subject" name="Subject"
+            type="text" required></div>
+        <div class="modal-field"><label for="contact-message">Message</label><textarea id="contact-message"
+            name="Message" required></textarea></div>
+        <button class="modal-submit" type="submit">Send Message →</button>
+        <div class="form-status" role="status" aria-live="polite"></div>
+      </form>
     </div>
   </div>
 
   <script>
     function toggleNav() { document.getElementById('mainNav').classList.toggle('mobile-open'); }
-    function openModal(e) { if (e) e.preventDefault(); document.getElementById('contactModal').classList.add('open'); document.body.style.overflow = 'hidden'; }
-    function closeModal() { document.getElementById('contactModal').classList.remove('open'); document.body.style.overflow = ''; }
-    function closeModalOnOverlay(e) { if (e.target === document.getElementById('contactModal')) closeModal(); }
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    const modals = { team: document.getElementById('teamModal'), contact: document.getElementById('contactModal') };
+    let activeModal = null;
+    function openModal(type) {
+      const modal = modals[type];
+      if (!modal) return;
+      activeModal = modal;
+      modal.hidden = false;
+      requestAnimationFrame(() => modal.classList.add('open'));
+      document.body.style.overflow = 'hidden';
+      const firstInput = modal.querySelector('input:not([type="hidden"]):not([style*="display:none"])');
+      if (firstInput) setTimeout(() => firstInput.focus(), 100);
+    }
+    function closeModal() {
+      if (!activeModal) return;
+      const modal = activeModal;
+      modal.classList.remove('open');
+      document.body.style.overflow = '';
+      activeModal = null;
+      setTimeout(() => { modal.hidden = true; }, 300);
+    }
+    document.querySelectorAll('[data-modal]').forEach(trigger => trigger.addEventListener('click', event => { event.preventDefault(); openModal(trigger.dataset.modal); }));
+    document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', closeModal));
+    Object.values(modals).forEach(modal => modal.addEventListener('click', event => { if (event.target === modal) closeModal(); }));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); });
+    document.querySelectorAll('.contact-form').forEach(form => {
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        const button = form.querySelector('.modal-submit');
+        const status = form.querySelector('.form-status');
+        const originalLabel = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Sending…';
+        status.className = 'form-status';
+        status.textContent = '';
+        try {
+          const response = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+          if (!response.ok) throw new Error('Submission failed');
+          form.reset();
+          status.textContent = 'Thank you. Your message has been sent successfully.';
+          status.className = 'form-status success';
+        } catch (error) {
+          status.textContent = 'We could not send your message. Please try again or email info@binaris.com.au.';
+          status.className = 'form-status error';
+        } finally {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      });
+    });
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
   </script>
-  <script src="contact-form.js"></script>
+  <script src="contact-form-handler.js"></script>
 </body>
 
 </html>
-
-
